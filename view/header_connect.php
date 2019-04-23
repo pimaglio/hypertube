@@ -13,7 +13,7 @@ if (!isset($_SESSION['loggued_on_user']))
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Matcha Dating APP</title>
+    <title>Hypertube Torrent Streaming APP</title>
     <link rel="icon" type="image/png" href="assets/images/favico.png"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -29,64 +29,27 @@ if (!isset($_SESSION['loggued_on_user']))
 
 <nav class="fade-in one">
     <div class="nav-wrapper">
-        <a href="../" class="brand-logo center logo_home"><i class="fas fa-heart"></i>Matcha</a>
+        <a href="../" class="brand-logo center logo_home"><i class="fas fa-film"></i>Hypertube</a>
         <ul class="right hide-on-med-and-down">
             <li><a href="logout.php"><i class="material-icons">power_settings_new</i></a></li>
         </ul>
         <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
     </div>
 </nav>
-<ul id="slide-out" class="sidenav fixed">
-    <li>
-        <div class="user-view background_sidenav">
-            <?php
-            $data = recup_user();
-            $name = $data['nom'];
-            $login = $data['login'];
-            $email = $data['email'];
-            $myid = $_SESSION['id'];
-            $photo = new photos(array(
-                    'id2' => $myid
-            ));
-            $array_pic = $photo->array_pic();
-            $pp = $array_pic['pp'];
-            if (empty($pp))
-                $img = '';
-            else
-                $img = '<a href="profile.php?id=' . $myid . '"><img class="circle image_profil_sidenav" src="' . $pp . '"></a>';
-            echo "
-            $img
-            <a href=\"#name\"><span class=\"white-text name\">$name ($login)</span></a>
-            <a href=\"#email\"><span class=\"white-text email\">$email</span></a>
-            ";
-            ?>
-
-
-        </div>
-    </li>
-    <li><a class="subheader">Menu Principal</a></li>
-    <li><a href="search.php"><i class="material-icons">search</i>Rechercher</a></li>
-    <li><a href="index.php"><i class="material-icons">sort</i>Suggestions</a></li>
-    <li><a href="like.php"><i class="material-icons">whatshot</i>Mes likes</a></li>
-    <li><a href="discussion.php"><i class="material-icons">message</i>Messages</a></li>
-    <li><a href="history.php"><i class="material-icons">history</i>Historique des visites</a></li>
-    <li>
-        <div class="divider"></div>
-    </li>
-    <li><a class="subheader">Paramètres Généraux</a></li>
-    <li><a href="account.php"><i class="material-icons">settings</i>Mon profil</a></li>
-    <li><a href="logout.php"><i class="material-icons">power_settings_new</i>Se déconnecter</a></li>
-    <li><a href="delete.php"><i class="material-icons">delete</i>Supprimer mon compte</a></li>
-    <?php
-
-    if (isset($_SESSION['loggued_on_user']))
-        if ($_SESSION['loggued_on_user'] === 'root') {
-            echo "
-            <li><a style='color: #f50057' href=\"random.php\"><i style='color: #f50057' class=\"material-icons\">assignment_ind</i>Générer les FakesUsers</a></li>
-            ";
-        }
-    ?>
-
+<ul id="slide-out" class="sidenav">
+    <li><div class="user-view">
+            <div class="background">
+                <img src="assets/images/bg_profil.png">
+            </div>
+            <a href="#user"><img class="circle" src="assets/images/fakeuser.jpg"></a>
+            <a href="#name"><span class="white-text name">John Doe</span></a>
+            <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+        </div></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
 </ul>
 
 <!--NOTIFICATIONS-->

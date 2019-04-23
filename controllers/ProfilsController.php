@@ -8,8 +8,6 @@
 include('../models/UsersModel2.php');
 include ('../models/LocationModel.php');
 require_once "PopulariteController.php";
-require '../vendor/autoload.php';
-use GeoIp2\Database\Reader;
 
 if (!isset($_SESSION)) {
     session_start();

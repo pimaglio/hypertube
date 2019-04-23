@@ -11,7 +11,7 @@ if (isset($_SESSION['loggued_on_user']))
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Matcha Dating APP</title>
+    <title>Hypertube Torrent Streaming APP</title>
     <link rel="icon" type="image/png" href="view/assets/images/favico.png"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="view/assets/css/style.css">
@@ -28,7 +28,7 @@ if (isset($_SESSION['loggued_on_user']))
 
 <div class="home_page row">
     <h1 class="logo_home fade-in one">
-        Matcha
+        Hypertube
     </h1>
     <div style="margin-top: 400px">
         <a href="view/register.php" class="waves-effect waves-light btn-large blue"><i

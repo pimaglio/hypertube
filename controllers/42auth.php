@@ -27,6 +27,6 @@ else
         $client->setAccessToken($response['result']['access_token']);
         $response = $client->fetch('https://api.intra.42.fr/v2/me');
         $user = $response['result'];
-        var_dump($user);
+        htmldump($user);
     }
 }

@@ -11,10 +11,10 @@ function database_connect()
     $DB_DSN = "172.18.0.2";
     $DB_USER = "root";
     $DB_PASSWORD = "root";
-    $DB_NAME = "matcha";
+    $DB_NAME = "hypertube";
 
     $conn = new PDO("mysql:host=$DB_DSN", $DB_USER, $DB_PASSWORD);
-    $conn->exec('CREATE DATABASE IF NOT EXISTS `matcha` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;');
+    $conn->exec('CREATE DATABASE IF NOT EXISTS `hypertube` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;');
     try {
         $db_conn = new PDO("mysql:host=$DB_DSN;dbname=$DB_NAME", $DB_USER, $DB_PASSWORD);
         // set the PDO error mode to exception
