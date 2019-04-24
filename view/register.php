@@ -72,7 +72,7 @@ include('header_alt.php');
             </div>
         </div>
         <div style="text-align: center" class="input-field col s12">
-            <img src="../upload/no-image.png" class="preview img_up" />
+            <img src="../upload/no-image.png" class="preview img_up"/>
             <div class="file-field input-field">
                 <div class="btn">
                     <span>Choisir</span>
@@ -91,6 +91,9 @@ include('header_alt.php');
             </button>
         </div>
     </form>
+    <div style="margin-top: 30px" class="col s12">
+        <hr class="style14">
+    </div>
     <div style="text-align: center; margin-top: 50px">
         <p class="connect fade-in seven">Tu es déjà inscrit ? <a class="link" href="login.php">Connecte-toi</a></p>
     </div>
@@ -116,12 +119,12 @@ include('header_alt.php');
     password.onchange = validatePassword;
     confirm_password.onkeyup = validatePassword;
 
-    $(function() {
-        $("input[data-preview]").change(function() {
-            var input	= $(this);
-            var oFReader	= new FileReader();
+    $(function () {
+        $("input[data-preview]").change(function () {
+            var input = $(this);
+            var oFReader = new FileReader();
             oFReader.readAsDataURL(this.files[0]);
-            oFReader.onload	= function(oFREvent) {
+            oFReader.onload = function (oFREvent) {
                 $(input.data('preview')).attr('src', oFREvent.target.result);
             };
         });

@@ -486,15 +486,6 @@ if (isset($_POST['forgot']) && $_POST['forgot'] === 'ok' && isset($_POST['login'
     }
 }
 
-// DECONNEXION
-
-function unlog()
-{
-    $user = new account(["login" => $_SESSION['loggued_on_user']]);
-    $date = date('Y-m-d H:i:s');
-    $user->set_statut($date);
-}
-
 // DELETE ACCOUNT A FINIR pour toutes les tables
 
 function delete_account()
