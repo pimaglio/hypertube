@@ -4,7 +4,6 @@ if (!isset($_SESSION)) {
 }
 
 if (isset($_SESSION['loggued_on_user']))
-    if (!isset($_SESSION['loggued_but_not_complet']))
         header("Location: ./view");
 ?>
 <!DOCTYPE html>

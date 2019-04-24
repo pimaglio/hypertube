@@ -113,7 +113,7 @@ nav {
 .form_create_profil {
     width: 800px;
     background-color: #ffffff;
-    padding: 70px 50px 30px 50px;
+    padding: 30px 50px 30px 50px;
     position: relative;
     border-radius: 8px;
     box-shadow: 0 8px 15px rgba(125, 147, 178, .25);
@@ -1338,4 +1338,9 @@ input#imagep4:hover {
     color: #ee6e73;
     text-transform: uppercase;
     text-align: center;
+}
+
+.auth_logo{
+    width: 50px;
+    height: 50px;
 }

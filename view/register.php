@@ -22,16 +22,18 @@ include('header_alt.php');
 
 <div class="form_create_profil fade-in two">
     <div class="row">
-        <div class="col s6">
-            <div class="form_pic2"></div>
-        </div>
-        <div class="col s6">
-            <h2 class="title-form">Inscription <br><span class="title-form-alt">Sign in</span></h2>
+        <div class="title_account2">
+            <img class="image_title_account" src="assets/images/createprofil.svg">
+            <h2 style="margin-left: 100px;" class="title-form-alt">Inscription<br><span
+                        class="title-form">Sign in</span></h2>
         </div>
     </div>
     <form id="register-form" method="POST" action="../controllers/ProfilsController.php" enctype="multipart/form-data">
         <div class="row">
-            <div class="input-field col s12 fade-in three">
+            <div style="margin-top: 15px; margin-bottom: 15px" class="col s12 center">
+                <a href="../controllers/42auth.php"><img class="auth_logo" src="assets/images/42_Logo.svg"></a>
+            </div>
+            <div class="input-field col s6 fade-in three">
                 <i class="material-icons prefix">account_circle</i>
                 <input id="nom" type="text" class="validate" pattern="[A-Za-z\séèâêëçû -]+" name="nom" maxlength="50"
                        autofocus required>
@@ -39,7 +41,7 @@ include('header_alt.php');
                       data-success="Format valide"></span>
                 <label for="nom">Nom et Prénom</label>
             </div>
-            <div class="input-field col s12 fade-in four">
+            <div class="input-field col s6 fade-in four">
                 <i class="material-icons prefix">account_circle</i>
                 <input id="login" type="text" class="validate" pattern="[A-Za-z-0-9\s -]+" name="login" maxlength="25"
                        required>
@@ -52,7 +54,7 @@ include('header_alt.php');
                 <input id="email" type="email" class="validate" name="email" required>
                 <label for="email">Adresse email</label>
             </div>
-            <div class="input-field col s12 fade-in six">
+            <div class="input-field col s6 fade-in six">
                 <i class="material-icons prefix">vpn_key</i>
                 <input id="password" type="password" class="validate" pattern="(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}"
                        name="password" maxlength="25" required>
@@ -61,7 +63,7 @@ include('header_alt.php');
                       data-success="Format valide"></span>
                 <label for="password">Mot de passe</label>
             </div>
-            <div class="input-field col s12 fade-in seven">
+            <div class="input-field col s6 fade-in seven">
                 <i class="material-icons prefix">vpn_key</i>
                 <input id="password2" type="password" class="validate" pattern="(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}"
                        name="password2" maxlength="25" required>
@@ -91,9 +93,6 @@ include('header_alt.php');
             </button>
         </div>
     </form>
-    <div style="margin-top: 30px" class="col s12">
-        <hr class="style14">
-    </div>
     <div style="text-align: center; margin-top: 50px">
         <p class="connect fade-in seven">Tu es déjà inscrit ? <a class="link" href="login.php">Connecte-toi</a></p>
     </div>
