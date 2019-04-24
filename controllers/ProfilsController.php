@@ -5,8 +5,8 @@
  * Date: 2019-04-04
  * Time: 15:05
  */
-include('../models/UsersModel2.php');
-include ('../models/LocationModel.php');
+include('../models/UsersModel.php');
+include('../models/LocationModel.php');
 require_once "PopulariteController.php";
 
 if (!isset($_SESSION)) {
@@ -84,7 +84,8 @@ function recup_inter_id($id)
 
 /*LIKE*/
 
-function is_like($id_usr, $id_usr_l){
+function is_like($id_usr, $id_usr_l)
+{
     $db_con = new like(array(
         'id_usr' => $id_usr,
         'id_usr_l' => $id_usr_l
@@ -93,7 +94,8 @@ function is_like($id_usr, $id_usr_l){
     return $res;
 }
 
-function is_like_user($id_usr, $id_usr_l){
+function is_like_user($id_usr, $id_usr_l)
+{
     $db_con = new like(array(
         'id_usr' => $id_usr,
         'id_usr_l' => $id_usr_l
@@ -102,7 +104,8 @@ function is_like_user($id_usr, $id_usr_l){
     return $res;
 }
 
-function is_match($id_usr, $id_usr_l){
+function is_match($id_usr, $id_usr_l)
+{
     $db_con = new like(array(
         'id_usr' => $id_usr,
         'id_usr_l' => $id_usr_l
@@ -111,7 +114,8 @@ function is_match($id_usr, $id_usr_l){
     return $res;
 }
 
-function get_like($id){
+function get_like($id)
+{
     $db_con = new like(array(
         'id_usr' => $id
     ));
@@ -119,7 +123,8 @@ function get_like($id){
     return $res;
 }
 
-function get_like2($id){
+function get_like2($id)
+{
     $db_con = new like(array(
         'id_usr' => $id
     ));
@@ -128,7 +133,7 @@ function get_like2($id){
 }
 
 
-if (isset($_POST['like']) && $_POST['like'] === 'add'){
+if (isset($_POST['like']) && $_POST['like'] === 'add') {
     $db_con = new like(array(
         'id_usr' => $_POST['id_usr'],
         'id_usr_l' => $_POST['id_usr_l'],
@@ -136,7 +141,7 @@ if (isset($_POST['like']) && $_POST['like'] === 'add'){
     $db_con->add_like();
     add_popularite($_POST['id_usr_l'], 100);
     $res = is_match($_POST['id_usr'], $_POST['id_usr_l']);
-    if ($res == 1){
+    if ($res == 1) {
         $_SESSION['match'] = 1;
         add_popularite($_POST['id_usr_l'], 200);
         add_popularite($_POST['id_usr'], 200);
@@ -145,7 +150,7 @@ if (isset($_POST['like']) && $_POST['like'] === 'add'){
     header('Location: ../view/profile.php?id=' . $_POST['id']);
 }
 
-if (isset($_POST['like']) && $_POST['like'] === 'del'){
+if (isset($_POST['like']) && $_POST['like'] === 'del') {
     $db_con = new like(array(
         'id_usr' => $_POST['id_usr'],
         'id_usr_l' => $_POST['id_usr_l'],
@@ -160,9 +165,9 @@ if (isset($_POST['like']) && $_POST['like'] === 'del'){
 
 /*MESSAGE*/
 
-if (isset($_POST['send']) && $_POST['send'] === 'ok'){
+if (isset($_POST['send']) && $_POST['send'] === 'ok') {
     $message = $_POST['message'];
-    if ($message != htmlspecialchars($_POST['message'])){
+    if ($message != htmlspecialchars($_POST['message'])) {
         $_SESSION['error'] = 5;
         header('Location: ../view/message.php?id=' . $_POST['id_usr_l']);
         exit;
@@ -176,7 +181,8 @@ if (isset($_POST['send']) && $_POST['send'] === 'ok'){
     header('Location: ../view/message.php?id=' . $_POST['id_usr_l']);
 }
 
-function get_message($id_usr, $id_usr_l){
+function get_message($id_usr, $id_usr_l)
+{
     $db_con = new discussion(array(
         'id_usr' => $id_usr,
         'id_usr_l' => $id_usr_l
@@ -185,14 +191,14 @@ function get_message($id_usr, $id_usr_l){
     return $res;
 }
 
-function get_all_message($id_usr){
+function get_all_message($id_usr)
+{
     $db_con = new discussion(array(
         'id_usr' => $id_usr,
     ));
     $res = $db_con->fetch_all_message();
     return $res;
 }
-
 
 
 // MODIF USER
@@ -240,18 +246,16 @@ if (isset($_POST['user_modif']) && $_POST['user_modif'] === 'ok' && isset($_POST
     $id = $info->find_id();
     $db_con = new account($_POST);
     $_SESSION['modif'] = 1;
-    if ($var = $db_con->ifLoginTaken() === 1 && isset($_SESSION['error']) && $_SESSION['error'] === 6 && $_POST['login'] !== $user['login']){
+    if ($var = $db_con->ifLoginTaken() === 1 && isset($_SESSION['error']) && $_SESSION['error'] === 6 && $_POST['login'] !== $user['login']) {
         header('Location: ../view/account.php');
         unset ($_SESSION['modif']);
         exit();
-    }
-    else if  (($var = $db_con->ifEmailTaken() === 1) && $_POST['email'] !== $user['email']){
+    } else if (($var = $db_con->ifEmailTaken() === 1) && $_POST['email'] !== $user['email']) {
         $_SESSION['error'] = 7;
         unset ($_SESSION['modif']);
         header('Location: ../view/account.php');
         exit();
-    }
-    else {
+    } else {
         $db = new account(array(
             'login' => $_POST['login'],
             'password' => $password,
@@ -270,9 +274,9 @@ if (isset($_POST['user_modif']) && $_POST['user_modif'] === 'ok' && isset($_POST
 // MODIF DATA ET INTERET
 
 if (isset($_POST['data_modif']) && $_POST['data_modif'] === 'ok' && isset($_POST['age']) && isset($_POST['location'])
-&& isset($_POST['sexe']) && isset($_POST['orientation']) && isset($_POST['bio'])) {
+    && isset($_POST['sexe']) && isset($_POST['orientation']) && isset($_POST['bio'])) {
     if (htmlspecialchars($_POST['age']) !== $_POST['age'] || htmlspecialchars($_POST['sexe']) !== $_POST['sexe']
-    || htmlspecialchars($_POST['location']) !== $_POST['location'] || htmlspecialchars($_POST['bio']) !== $_POST['bio']){
+        || htmlspecialchars($_POST['location']) !== $_POST['location'] || htmlspecialchars($_POST['bio']) !== $_POST['bio']) {
         $_SESSION['error'] = 5;
         header('Location: ../view/account.php');
         exit();
@@ -324,7 +328,7 @@ if (isset($_POST['createprofile']) && $_POST['createprofile'] === 'ok' && isset(
             $record = find_geoip();
             $loc = new location([$record->city->name, $record->postal->code, $record->location->latitude, $record->location->longitude, 0]);
             $loc->add_loc($_SESSION['id']);
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             $loc = new location(['Lyon', '69002', '45.7392364', '4.8174527', 2]);
             $loc->add_loc($_SESSION['id']);
         }
@@ -335,7 +339,6 @@ if (isset($_POST['createprofile']) && $_POST['createprofile'] === 'ok' && isset(
 }
 
 // REGISTER
-
 if (isset($_POST['register']) && $_POST['register'] === 'ok' && isset($_POST['login'])
     && isset($_POST['nom']) && isset($_POST['email']) && isset($_POST['password'])
     && isset($_POST['password2'])) {
@@ -367,11 +370,42 @@ if (isset($_POST['register']) && $_POST['register'] === 'ok' && isset($_POST['lo
         exit();
     }
     $password = hash('sha256', $_POST['password']);
+    /*    UPLOAD IMAGE*/
+    $target_dir = "../upload/";
+    $target_file = $target_dir . date('Y-m-d_g:i:s') . ".png";
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+// Check if image file is a actual image or fake image
+    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    if ($check === false) {
+        $_SESSION['error'] = 11;
+        header('Location: ../view/register.php');
+        exit();
+    }
+// Check file size
+    if ($_FILES["fileToUpload"]["size"] > 500000) {
+        $_SESSION['error'] = 12;
+        header('Location: ../view/register.php');
+        exit();
+    }
+// Allow certain file formats
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif") {
+        $_SESSION['error'] = 11;
+        header('Location: ../view/register.php');
+        exit();
+    }
+    if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+        $_SESSION['error'] = 13;
+        header('Location: ../view/register.php');
+        exit();
+    }
     $new_user = new account(array(
         'login' => $_POST['login'],
         'nom' => $_POST['nom'],
         'password' => $password,
         'email' => $_POST['email'],
+        'pic' => $target_file
     ));
     $var = $new_user->add();
     if ($var === 1) {
@@ -416,16 +450,8 @@ if (isset ($_POST['connec']) && $_POST['connec'] === 'ok' && isset($_POST['passw
         header("Location: ../view/login.php");
         exit();
     }
-    if ($var === 4) {
-//        $_SESSION['error'] = 13;
-        header("Location: ../view/createprofile.php");
-        exit();
-    }
-    else {
-        $_SESSION['success'] = 4;
-        $user->set_statut(1);
-        header("Location: ../view/");
-    }
+    $_SESSION['success'] = 4;
+    header("Location: ../view/");
 }
 
 
@@ -462,7 +488,8 @@ if (isset($_POST['forgot']) && $_POST['forgot'] === 'ok' && isset($_POST['login'
 
 // DECONNEXION
 
-function unlog(){
+function unlog()
+{
     $user = new account(["login" => $_SESSION['loggued_on_user']]);
     $date = date('Y-m-d H:i:s');
     $user->set_statut($date);
@@ -470,14 +497,16 @@ function unlog(){
 
 // DELETE ACCOUNT A FINIR pour toutes les tables
 
-function delete_account(){
+function delete_account()
+{
     $db_con = new infos([]);
     $db_con->drop($_SESSION['id']);
 }
 
 //FAKE ACCOUNT
 
-function manage_fake_account($arr){
+function manage_fake_account($arr)
+{
     $db_con = new account($arr);
     $db_con->add();
     $db_con->setValid();
@@ -489,15 +518,15 @@ function manage_fake_account($arr){
     $db->addpop($arr['popularite']);
     $loc = new location($arr['location']);
     $loc->add_loc($id);
-    $array['sport'] = rand(0,1);
-    $array['voyage'] = rand(0,1);
-    $array['vegan'] = rand(0,1);
-    $array['geek'] = rand(0,1);
-    $array['soiree'] = rand(0,1);
-    $array['tattoo'] = rand(0,1);
-    $array['musique'] = rand(0,1);
-    $array['lecture'] = rand(0,1);
-    $array['theatre'] = rand(0,1);
-    $array['religion'] = rand(0,1);
+    $array['sport'] = rand(0, 1);
+    $array['voyage'] = rand(0, 1);
+    $array['vegan'] = rand(0, 1);
+    $array['geek'] = rand(0, 1);
+    $array['soiree'] = rand(0, 1);
+    $array['tattoo'] = rand(0, 1);
+    $array['musique'] = rand(0, 1);
+    $array['lecture'] = rand(0, 1);
+    $array['theatre'] = rand(0, 1);
+    $array['religion'] = rand(0, 1);
     $db->add_interest($array);
 }

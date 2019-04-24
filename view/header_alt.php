@@ -9,7 +9,7 @@ if (!isset($_SESSION))
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Matcha Dating APP</title>
+    <title>Hypertube Torrent Streaming App</title>
     <link rel="icon" type="image/png" href="assets/images/favico.png"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -22,9 +22,10 @@ if (!isset($_SESSION))
           integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 </head>
 <body>
-<nav style="background-color: #00b0ff !important;" class="fade-in one">
+
+<nav class="fade-in one">
     <div class="nav-wrapper">
-        <a href="../" class="brand-logo center logo_home"><i class="fas fa-heart"></i>Matcha</a>
+        <a href="../" class="brand-logo center logo_home"><i class="fas fa-heart"></i>Hypertube</a>
         <ul class="right hide-on-med-and-down">
             <?php
             if (isset($_SESSION['loggued_on_user'])) {
@@ -36,6 +37,11 @@ if (!isset($_SESSION))
         </ul>
     </div>
 </nav>
+<div class="background">
+    <svg viewbox="0 0 100 25">
+        <path fill="#FFFFFF" d="M0 30 V12 Q30 17 55 12 T100 11 V30z" />
+    </svg>
+</div>
 
 <?php
 if (isset($_SESSION['success'])) {
@@ -106,6 +112,18 @@ if (isset($_SESSION['success'])) {
         case 10:
             $icon = 'fas fa-times';
             $message = 'Mot de passe incorrect.';
+            break;
+        case 11:
+            $icon = 'fas fa-exclamation-triangle';
+            $message = 'Votre fichier doit être une image (JPG, JPEG, PNG & GIF)';
+            break;
+        case 12:
+            $icon = 'fas fa-exclamation-triangle';
+            $message = 'Votre image est trop lourde (>5mb)';
+            break;
+        case 13:
+            $icon = 'fas fa-exclamation-triangle';
+            $message = 'Une erreur est survenue durant l\'upload de votre image, veuillez réessayer plus tard';
             break;
     }
     echo "

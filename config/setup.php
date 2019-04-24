@@ -90,18 +90,17 @@ CREATE TABLE if not exists user_db (
   email varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   creation_date date DEFAULT NULL,
   cle varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  pic VARCHAR(255) NOT NULL default '../upload/no-image.png',
   notif tinyint(1) DEFAULT NULL,
   valid tinyint(1) DEFAULT NULL,
-  statut varchar(255) NOT NULL default 'Déconnecté',
-  profile binary(1) NOT NULL default '0',
   PRIMARY KEY (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_unicode_ci
 EOSQL;
 
     $sql_create_user = <<<EOSQL
-INSERT INTO user_db (login, nom, password, email, valid, profile)
+INSERT INTO user_db (login, nom, password, email, valid)
 VALUES 
-  ('root', 'root', '4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2', 'root@root.com', '1', '1');
+  ('root', 'root', '4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2', 'root@root.com', '1');
 EOSQL;
 
     $msg = '';

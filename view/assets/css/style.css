@@ -48,7 +48,7 @@ a {
 
 body {
     font-family: 'Nunito', sans-serif;
-    background-color: #212121;
+    background-color: black;
 }
 
 * {
@@ -59,15 +59,10 @@ body {
 
 /* Header */
 
-#background {
-    z-index: -1;
-    position: absolute;
-    top: 0;
-    height: 400px;
+.background {
+    position: fixed !important;
     width: 100%;
-    background-color: #eff6ff;
-    background-image: url('../images/wave.png');
-    background-size: 100vw 400px;
+    bottom: -7px;
 }
 
 #background2 {
@@ -95,8 +90,9 @@ nav {
         width: 100% !important;
     }
 
-    .form_create_profil .form_pic2 {
-
+    .form_create_profil .form_pic {
+        margin: auto !important;
+        float: none !important;
     }
 
     .container_slider {
@@ -1099,15 +1095,10 @@ DISCUSSION PAGE
 */
 
 
-.img_pp {
-    background-size: cover;
-    background-position-x: center;
-    background-repeat: no-repeat;
-    height: 300px;
-    width: 300px;
-    position: absolute;
-    top: 0;
-    left: 0;
+.img_up {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
 }
 
 input#imagepp {

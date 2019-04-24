@@ -10,7 +10,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-include '../models/UsersModel2.php';
+include '../models/UsersModel.php';
 
 if (isset($_POST['hidden_data'])) {
     $upload_dir = "../upload/";

@@ -6,7 +6,7 @@
  * Time: 10:19
  */
 
-include('./UsersModel2.php');
+include('./UsersModel.php');
 if (!isset($_SESSION))
 	session_start();
 $new = New account(array("empty" => "empty"));

@@ -582,6 +582,7 @@ class account
     private $login;
     private $nom;
     private $id;
+    private $pic;
     private $password;
     private $email;
     private $date;
@@ -606,6 +607,8 @@ class account
             $this->nom = $user_account['nom'];
         if (array_key_exists('valid', $user_account))
             $this->valid = $user_account['valid'];
+        if (array_key_exists('pic', $user_account))
+            $this->pic = $user_account['pic'];
         $this->date = date('Y-m-d H:i:s');
         $this->db_con = database_connect();
     }
@@ -685,13 +688,14 @@ class account
         try {
             if ($this->ifLoginTaken() || $this->ifEmailTaken())
                 return 1;
-            $stmt = $this->db_con->prepare("INSERT INTO user_db(login, nom, email, password, creation_date) VALUES (:login, :nom, :email, :password, :creation_date)");
+            $stmt = $this->db_con->prepare("INSERT INTO user_db(login, nom, email, password, creation_date, pic) VALUES (:login, :nom, :email, :password, :creation_date, :pic)");
             $val = $stmt->execute(array(
                 ":login" => $this->login,
                 ":nom" => $this->nom,
                 ":email" => $this->email,
                 ":password" => $this->password,
-                ":creation_date" => $this->date
+                ":creation_date" => $this->date,
+                ":pic" => $this->pic
             ));
             if ($val) {
                 $_SESSION['loggued_but_not_valid'] = $this->login;
@@ -710,54 +714,6 @@ class account
             echo $e->getMessage();
         }
     }
-
-//    EDIT PROFIL
-
-//    public function UpPass($user)
-//    {
-//        try {
-//            $stmt = $this->db_con->prepare("UPDATE user_db SET password=:password WHERE login='$user'");
-//            $val = $stmt->execute(array(
-//                ":password" => $this->password,
-//            ));
-//        } catch (PDOException $e) {
-//            echo $e->getMessage();
-//        }
-//        $_SESSION['alert'] = 11;
-//        return 1;
-//    }
-//
-//    public function UpLogin($user)
-//    {
-//        try {
-//            $stmt = $this->db_con->prepare("UPDATE user_db SET login=:login WHERE login='$user'");
-//            $val = $stmt->execute(array(
-//                ":login" => $this->login,
-//            ));
-//            $stmt = $this->db_con->prepare("UPDATE data SET login=:login WHERE login='$user'");
-//            $val = $stmt->execute(array(
-//                ":login" => $this->login,
-//            ));
-//        } catch (PDOException $e) {
-//            echo $e->getMessage();
-//        }
-//        $_SESSION['alert'] = 12;
-//        return 1;
-//    }
-//
-//    public function UpEmail($user)
-//    {
-//        try {
-//            $stmt = $this->db_con->prepare("UPDATE user_db SET email=:email WHERE login='$user'");
-//            $val = $stmt->execute(array(
-//                ":email" => $this->email,
-//            ));
-//        } catch (PDOException $e) {
-//            echo $e->getMessage();
-//        }
-//        $_SESSION['alert'] = 13;
-//        return 1;
-//    }
 
     public function edit_profil($id)
     {
@@ -855,7 +811,7 @@ class account
 
     public function Connect()
     {
-        $stmt = $this->db_con->prepare("SELECT email, valid, password, login, profile, id FROM user_db WHERE login=:login");
+        $stmt = $this->db_con->prepare("SELECT email, valid, password, login, id FROM user_db WHERE login=:login");
         $stmt->execute(array(
             ":login" => $this->login
         ));
@@ -867,26 +823,9 @@ class account
             return 2;
         if ($fetched['password'] !== $this->password)
             return 3;
-        if ($fetched['profile'] == 0) {
-            $_SESSION['loggued_on_user'] = $fetched['login'];
-            $_SESSION['loggued_but_not_complet'] = $fetched['login'];
-            $_SESSION['id'] = $fetched['id'];
-            return 4;
-        } else {
-            $_SESSION['loggued_on_user'] = $fetched['login'];
-            $_SESSION['id'] = $fetched['id'];
-            return 0;
-        }
-    }
-
-    public function set_statut($i)
-    {
-        $query = 'UPDATE user_db SET statut=:i WHERE login=:log';
-        $stmt = $this->db_con->prepare($query);
-        $stmt->execute(array(
-            ":log" => $this->login,
-            ":i" => $i
-        ));
+        $_SESSION['loggued_on_user'] = $fetched['login'];
+        $_SESSION['id'] = $fetched['id'];
+        return 0;
     }
 
     public function UpNotif()

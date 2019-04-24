@@ -29,18 +29,22 @@ include('header_alt.php');
             <h2 class="title-form">Inscription <br><span class="title-form-alt">Sign in</span></h2>
         </div>
     </div>
-    <form id="register-form" method="POST" action="../controllers/ProfilsController.php">
+    <form id="register-form" method="POST" action="../controllers/ProfilsController.php" enctype="multipart/form-data">
         <div class="row">
             <div class="input-field col s12 fade-in three">
                 <i class="material-icons prefix">account_circle</i>
-                <input id="nom" type="text" class="validate" pattern="[A-Za-z\séèâêëçû -]+" name="nom" maxlength="50" autofocus required>
-                <span class="helper-text" data-error="Format invalide: (A-z) et (-)" data-success="Format valide"></span>
+                <input id="nom" type="text" class="validate" pattern="[A-Za-z\séèâêëçû -]+" name="nom" maxlength="50"
+                       autofocus required>
+                <span class="helper-text" data-error="Format invalide: (A-z) et (-)"
+                      data-success="Format valide"></span>
                 <label for="nom">Nom et Prénom</label>
             </div>
             <div class="input-field col s12 fade-in four">
                 <i class="material-icons prefix">account_circle</i>
-                <input id="login" type="text" class="validate" pattern="[A-Za-z-0-9\s -]+" name="login" maxlength="25" required>
-                <span class="helper-text" data-error="Format invalide: (A-z), (0-9), (-)" data-success="Format valide"></span>
+                <input id="login" type="text" class="validate" pattern="[A-Za-z-0-9\s -]+" name="login" maxlength="25"
+                       required>
+                <span class="helper-text" data-error="Format invalide: (A-z), (0-9), (-)"
+                      data-success="Format valide"></span>
                 <label for="login">Nom d'utilisateur</label>
             </div>
             <div class="input-field col s12 fade-in five">
@@ -50,21 +54,38 @@ include('header_alt.php');
             </div>
             <div class="input-field col s12 fade-in six">
                 <i class="material-icons prefix">vpn_key</i>
-                <input id="password" type="password" class="validate" pattern="(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}" name="password" maxlength="25" required>
-                <span class="helper-text" data-error="Format invalide: Doit contenir 6 caractères minimum dont 1 caractère special (!@#$%^&*(),.?:{}|<>)" data-success="Format valide"></span>
+                <input id="password" type="password" class="validate" pattern="(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}"
+                       name="password" maxlength="25" required>
+                <span class="helper-text"
+                      data-error="Format invalide: Doit contenir 6 caractères minimum dont 1 caractère special (!@#$%^&*(),.?:{}|<>)"
+                      data-success="Format valide"></span>
                 <label for="password">Mot de passe</label>
             </div>
             <div class="input-field col s12 fade-in seven">
                 <i class="material-icons prefix">vpn_key</i>
-                <input id="password2" type="password" class="validate" pattern="(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}" name="password2" maxlength="25" required>
-                <span class="helper-text" data-error="Les mots de passe ne correspondent pas" data-success="Format valide"></span>
+                <input id="password2" type="password" class="validate" pattern="(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}"
+                       name="password2" maxlength="25" required>
+                <span class="helper-text" data-error="Les mots de passe ne correspondent pas"
+                      data-success="Format valide"></span>
 
                 <label for="password2">Mot de passe (confirmation)</label>
             </div>
         </div>
+        <div style="text-align: center" class="input-field col s12">
+            <img src="../upload/no-image.png" class="preview img_up" />
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>Choisir</span>
+                    <input type="file" name="fileToUpload" id="fileToUpload" data-preview=".preview" required/>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+        </div>
         <input type="hidden" name="register" value="ok">
         <div style="text-align: center">
-            <button class="btn-large waves-effect waves-light pink accent-3 fade-in eight" type="submit" name="submit"
+            <button class="btn-large waves-effect waves-light accent-3 fade-in eight" type="submit" name="submit"
                     value="Créer mon profil">S'inscrire
                 <i class="material-icons right">send</i>
             </button>
@@ -84,8 +105,8 @@ include('header_alt.php');
     var password = document.getElementById("password")
         , confirm_password = document.getElementById("password2");
 
-    function validatePassword(){
-        if(password.value !== confirm_password.value) {
+    function validatePassword() {
+        if (password.value !== confirm_password.value) {
             confirm_password.setCustomValidity("Les mots de passe ne correspondent pas");
         } else {
             confirm_password.setCustomValidity('');
@@ -94,5 +115,16 @@ include('header_alt.php');
 
     password.onchange = validatePassword;
     confirm_password.onkeyup = validatePassword;
+
+    $(function() {
+        $("input[data-preview]").change(function() {
+            var input	= $(this);
+            var oFReader	= new FileReader();
+            oFReader.readAsDataURL(this.files[0]);
+            oFReader.onload	= function(oFREvent) {
+                $(input.data('preview')).attr('src', oFREvent.target.result);
+            };
+        });
+    })
 </script>
 </body>
