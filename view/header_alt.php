@@ -2,7 +2,7 @@
 
 if (!isset($_SESSION))
     session_start();
-
+include '../controllers/ProfilsController.php';
 
 ?>
 <!DOCTYPE html>

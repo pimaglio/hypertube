@@ -23,7 +23,7 @@ function find_geoip()
 
 function htmldump($variable, $height = "300px")
 {
-    echo "<pre style=\"border: 1px solid #000; height: {$height}; overflow: auto; margin: 0.5em;\">";
+    echo "<pre style=\"border: 1px solid #000; height: {$height}; background-color: white; overflow: auto; margin: 0.5em;\">";
     var_dump($variable);
     echo "</pre>\n";
 }
