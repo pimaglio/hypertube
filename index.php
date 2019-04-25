@@ -3,6 +3,9 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+if (isset($_SESSION['code']))
+    htmldump($_SESSION['code']);
+
 if (isset($_SESSION['loggued_on_user']))
         header("Location: ./view");
 ?>
@@ -106,8 +109,12 @@ if (isset($_SESSION['success'])) {
             $message = 'Votre compte est déjà validé.';
             break;
         case 9:
-            $icon = 'fas fa-times';
+            $icon = 'fas fa-exclamation-triangle';
             $message = 'La clé d\'activation ne correspond pas.';
+            break;
+        case 10:
+            $icon = 'fas fa-exclamation-triangle';
+            $message = 'Votre Token 42 est invalide.';
             break;
     }
     echo "

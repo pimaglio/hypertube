@@ -15,7 +15,7 @@ if (isset($_SESSION['loggued_but_not_complet']))
 if (!isset($_SESSION['loggued_on_user']))
     header("Location: ../index.php");
 
-include('header_connect.php');
+
 
 if (isset($_SESSION['nbr']) && isset($_SESSION['photo'])) {
     $photo = new photos(['collage' => $_SESSION['photo']]);

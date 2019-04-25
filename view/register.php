@@ -31,7 +31,7 @@ include('header_alt.php');
     <form id="register-form" method="POST" action="../controllers/ProfilsController.php" enctype="multipart/form-data">
         <div class="row">
             <div style="margin-top: 15px; margin-bottom: 15px" class="col s12 center">
-                <a href="../controllers/42auth.php"><img class="auth_logo" src="assets/images/42_Logo.svg"></a>
+                <a href="42auth.php"><img class="auth_logo" src="assets/images/42_Logo.svg"></a>
             </div>
             <div class="input-field col s6 fade-in three">
                 <i class="material-icons prefix">account_circle</i>
