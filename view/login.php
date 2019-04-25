@@ -20,11 +20,10 @@ include('header_alt.php');
 </div>
 <div class="form_create_profil fade-in two">
     <div class="row">
-        <div class="col s6">
-            <div class="form_pic"></div>
-        </div>
-        <div class="col s6">
-            <h2 class="title-form">Connexion <br><span class="title-form-alt">sign up</span></h2>
+        <div class="title_account2">
+            <img class="image_title_account" src="assets/images/login.svg">
+            <h2 style="margin-left: 100px;" class="title-form-alt">Connexion<br><span
+                        class="title-form">Sign up</span></h2>
         </div>
     </div>
     <form class="fade-in three" id="register-form" method="POST" action="../controllers/ProfilsController.php">
