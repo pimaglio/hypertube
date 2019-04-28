@@ -583,6 +583,7 @@ class account
     private $nom;
     private $id;
     private $id_42;
+    private $id_google;
     private $pic;
     private $password;
     private $email;
@@ -612,6 +613,8 @@ class account
             $this->pic = $user_account['pic'];
         if (array_key_exists('id_42', $user_account))
             $this->id_42 = $user_account['id_42'];
+        if (array_key_exists('id_google', $user_account))
+            $this->id_google = $user_account['id_google'];
         $this->date = date('Y-m-d H:i:s');
         $this->db_con = database_connect();
     }
@@ -731,6 +734,39 @@ class account
                 ":creation_date" => $this->date,
                 ":pic" => $this->pic,
                 ":id_42" => $this->id_42
+            ));
+            if ($val) {
+                $_SESSION['loggued_but_not_valid'] = $this->login;
+                if (!isset($_SESSION['loggued_on_user'])) {
+                    $query = 'SELECT id FROM user_db WHERE login=:login';
+                    $stmt = $this->db_con->prepare($query);
+                    $stmt->execute(array(
+                        ":login" => $this->login
+                    ));
+                    $_SESSION['id'] = $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+                }
+                return 0;
+            } else
+                echo "ERROR EXECUTE ADD";
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function add_google()
+    {
+        try {
+            if ($this->ifLoginTaken() || $this->ifEmailTaken())
+                return 1;
+            $stmt = $this->db_con->prepare("INSERT INTO user_db(login, nom, email, password, creation_date, pic, id_google) VALUES (:login, :nom, :email, :password, :creation_date, :pic, :id_google)");
+            $val = $stmt->execute(array(
+                ":login" => $this->login,
+                ":nom" => $this->nom,
+                ":email" => $this->email,
+                ":password" => $this->password,
+                ":creation_date" => $this->date,
+                ":pic" => $this->pic,
+                ":id_google" => $this->id_google
             ));
             if ($val) {
                 $_SESSION['loggued_but_not_valid'] = $this->login;
@@ -877,6 +913,20 @@ class account
         return 0;
     }
 
+    public function Connect_Google()
+    {
+        $stmt = $this->db_con->prepare("SELECT valid, login, id FROM user_db WHERE id_google=:id_google");
+        $stmt->execute(array(
+            ":id_google" => $this->id_google
+        ));
+        $fetched = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$fetched['valid'])
+            return 2;
+        $_SESSION['loggued_on_user'] = $fetched['login'];
+        $_SESSION['id'] = $fetched['id'];
+        return 0;
+    }
+
     public function UpNotif()
     {
         $stmt = $this->db_con->prepare("UPDATE user_db SET notif=:notif WHERE login=:login");
@@ -944,6 +994,19 @@ class account
         ));
         $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
         if (isset($fetch['id_42']))
+            return 1;
+        return 0;
+    }
+
+    public function select_google_id()
+    {
+        $query = 'SELECT id_google FROM user_db WHERE id_google=:id_google';
+        $stmt = $this->db_con->prepare($query);
+        $stmt->execute(array(
+            ":id_google" => $this->id_google
+        ));
+        $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (isset($fetch['id_google']))
             return 1;
         return 0;
     }

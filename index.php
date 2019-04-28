@@ -6,7 +6,6 @@ if (!isset($_SESSION)) {
 if (isset($_SESSION['loggued_on_user']))
         header("Location: ./view");
 
-var_dump($_SESSION);
 ?>
 
 
@@ -115,7 +114,7 @@ if (isset($_SESSION['success2'])) {
             break;
         case 10:
             $icon = 'fas fa-exclamation-triangle';
-            $message = 'Votre Token 42 est invalide.';
+            $message = 'Token d\'authentification invalide.';
             break;
     }
     echo "

@@ -45,12 +45,18 @@ include('header_alt.php');
     } else
         $require = 'required';
     if (isset($_SESSION['id_42']))
-        $id = $_SESSION['id_42'];
+        $id_42 = $_SESSION['id_42'];
+    else
+        $id_42 = 0;
+    if (isset($_SESSION['id_google']))
+        $id_google = $_SESSION['id_google'];
+    else
+        $id_google = 0;
     echo "
                 <form id=\"register-form\" method=\"POST\" action=\"register.php\" enctype=\"multipart/form-data\">
                     <div class=\"row\">
                         <div style=\"margin-top: 15px; margin-bottom: 15px\" class=\"col s12 center\">
-                            <a href=\"googleauth.php\"><img class=\"auth_logo\" src=\"assets/images/google.png\"></a>
+                            <a href=\"../controllers/googleauth.php\"><img class=\"auth_logo\" src=\"assets/images/google.png\"></a>
                             <a href=\"42auth.php\"><img class=\"auth_logo\" src=\"assets/images/42_Logo.svg\"></a>
                         </div>
                         <div class=\"input-field col s6 fade-in three\">
@@ -97,7 +103,8 @@ include('header_alt.php');
                         </div>
                     </div>
                     <input type=\"hidden\" name=\"register_42\" value=\"ok\">
-                    <input type='hidden' name='42_id' value='$id'>
+                    <input type='hidden' name='42_id' value='$id_42'>
+                    <input type='hidden' name='google_id' value='$id_google'>
                     <div style=\"text-align: center\">
                         <button class=\"btn-large waves-effect waves-light accent-3 fade-in eight\" type=\"submit\" name=\"submit\" value=\"Créer mon profil\">S'inscrire
                             <i class=\"material-icons right\">send</i>

@@ -134,6 +134,16 @@ function get_42_id($id)
     return $db_con->select_42_id();
 }
 
+/*GOOGLE AUTH ACTION*/
+
+function get_google_id($id)
+{
+    $db_con = new account(array(
+        'id_google' => $id
+    ));
+    return $db_con->select_google_id();
+}
+
 
 if (isset($_POST['like']) && $_POST['like'] === 'add') {
     $db_con = new like(array(
@@ -424,7 +434,7 @@ if (isset($_POST['register_42']) && $_POST['register_42'] === 'ok' && isset($_PO
 // REGISTER 42
 if (isset($_POST['register_42']) && $_POST['register_42'] === 'ok' && isset($_POST['login'])
     && isset($_POST['nom']) && isset($_POST['email']) && isset($_POST['password'])
-    && isset($_POST['password2']) && !empty($_POST['42_id'])) {
+    && isset($_POST['password2']) && $_POST['42_id'] != 0) {
     if (htmlspecialchars($_POST['nom']) !== $_POST['nom'] || htmlspecialchars($_POST['login'])
         !== $_POST['login'] || htmlspecialchars($_POST['email']) !== $_POST['email']) {
         $_SESSION['error'] = 5;
@@ -509,6 +519,94 @@ if (isset($_POST['register_42']) && $_POST['register_42'] === 'ok' && isset($_PO
     }
 }
 
+// REGISTER GOOGLE
+if (isset($_POST['register_42']) && $_POST['register_42'] === 'ok' && isset($_POST['login'])
+    && isset($_POST['nom']) && isset($_POST['email']) && isset($_POST['password'])
+    && isset($_POST['password2']) && $_POST['google_id'] != 0) {
+    if (htmlspecialchars($_POST['nom']) !== $_POST['nom'] || htmlspecialchars($_POST['login'])
+        !== $_POST['login'] || htmlspecialchars($_POST['email']) !== $_POST['email'] || htmlspecialchars($_POST['google_id']) !== $_POST['google_id']) {
+        $_SESSION['error'] = 5;
+        header('Location: ../controllers/googleauth.php');
+        exit();
+    }
+    if (strlen($_POST['login']) > 25) {
+        $_SESSION['error'] = 1;
+        header('Location: .../controllers/googleauth.php');
+        exit();
+    }
+    if ($_POST['password'] !== $_POST['password2']) {
+        $_SESSION['error'] = 2;
+        header('Location: ../controllers/googleauth.php');
+        exit();
+    }
+    $spechar = lowpassword();
+    if ($spechar == 5) {
+        $_SESSION['error'] = 3;
+        header('Location: ../controllers/googleauth.php');
+        exit();
+    }
+    if (lowpassword() == 1) {
+        $_SESSION['error'] = 4;
+        header('Location: ../controllers/googleauth.php');
+        exit();
+    }
+    $password = hash('sha256', $_POST['password']);
+    if (isset($_POST['42pic'])){
+        if (!empty($_POST['42pic']))
+            $target_file = $_POST['42pic'];
+    }
+    if (!empty($_FILES["fileToUpload"]["size"])) {
+        /*    UPLOAD IMAGE*/
+        $target_dir = "../upload/";
+        $target_file = $target_dir . date('Y-m-d_g:i:s') . ".png";
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        // Check if image file is a actual image or fake image
+        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+        if ($check === false) {
+            $_SESSION['error'] = 11;
+            header('Location: ../controllers/googleauth.php');
+            exit();
+        }
+        // Check file size
+        if ($_FILES["fileToUpload"]["size"] > 500000) {
+            $_SESSION['error'] = 12;
+            header('Location: ../controllers/googleauth.php');
+            exit();
+        }
+        // Allow certain file formats
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif") {
+            $_SESSION['error'] = 11;
+            header('Location: ../controllers/googleauth.php');
+            exit();
+        }
+        if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            $_SESSION['error'] = 13;
+            header('Location: ../controllers/googleauth.php');
+            exit();
+        }
+    }
+    $new_user = new account(array(
+        'login' => $_POST['login'],
+        'nom' => $_POST['nom'],
+        'password' => $password,
+        'email' => $_POST['email'],
+        'pic' => $target_file,
+        'id_google' => $_POST['google_id']
+    ));
+    $var = $new_user->add_google();
+    if ($var === 1) {
+        header('Location: ../controllers/googleauth.php');
+        exit();
+    } else {
+        $new_user->sendMail();
+        $_SESSION['success2'] = 2;
+        unset($_SESSION['id_google']);
+        header('Location: ../index.php');
+    }
+}
+
 // CONNEXION
 
 if (isset ($_POST['connec']) && $_POST['connec'] === 'ok' && isset($_POST['password'])
@@ -551,6 +649,24 @@ function signin_42($id)
         'id_42' => $id
     ));
     $res = $db_con->Connect_42();
+    if ($res == 2) {
+        $_SESSION['error'] = 9;
+        header("Location: ../view/login.php");
+        exit();
+    }
+    $_SESSION['success'] = 4;
+    header("Location: ../view/");
+
+}
+
+/*GOOGLE CONNEXION*/
+
+function signin_google($id)
+{
+    $db_con = new account(array(
+        'id_google' => $id
+    ));
+    $res = $db_con->Connect_Google();
     if ($res == 2) {
         $_SESSION['error'] = 9;
         header("Location: ../view/login.php");

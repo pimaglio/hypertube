@@ -93,6 +93,7 @@ CREATE TABLE if not exists user_db (
   pic VARCHAR(255) NOT NULL default '../upload/no-image.png',
   notif tinyint(1) DEFAULT NULL,
   id_42 int(11) DEFAULT NULL,
+  id_google varchar(25) DEFAULT NULL,
   valid tinyint(1) DEFAULT NULL,
   PRIMARY KEY (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_unicode_ci
