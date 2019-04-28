@@ -2,7 +2,7 @@
 
 if (!isset($_SESSION))
     session_start();
-include '../controllers/ProfilsController.php';
+require '../controllers/ProfilsController.php';
 
 ?>
 <!DOCTYPE html>
@@ -20,12 +20,15 @@ include '../controllers/ProfilsController.php';
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
           integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="141074765115-n2mhte8kolbu2bm7d0lp19qcstdmpbff.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
 
 <nav class="fade-in one">
     <div class="nav-wrapper">
-        <a href="../" class="brand-logo center logo_home"><i class="fas fa-heart"></i>Hypertube</a>
+        <a href="../" class="brand-logo center logo_home"><i class="fas fa-film"></i>Hypertube</a>
         <ul class="right hide-on-med-and-down">
             <?php
             if (isset($_SESSION['loggued_on_user'])) {

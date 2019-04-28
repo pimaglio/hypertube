@@ -3,12 +3,13 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-if (isset($_SESSION['code']))
-    htmldump($_SESSION['code']);
-
 if (isset($_SESSION['loggued_on_user']))
         header("Location: ./view");
+
+var_dump($_SESSION);
 ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,8 +44,8 @@ if (isset($_SESSION['loggued_on_user']))
 
 
 <?php
-if (isset($_SESSION['success'])) {
-    switch ($_SESSION['success']) {
+if (isset($_SESSION['success2'])) {
+    switch ($_SESSION['success2']) {
         case 1:
             $icon = 'fas fa-check';
             $message = 'Mise à jour effectuée.';
@@ -65,7 +66,7 @@ if (isset($_SESSION['success'])) {
     echo "
     <div class=\"quotes alert_notif\"><a class=\"success\"><i class=\"$icon icon_spacing\"></i>$message</a></div>
     ";
-    unset($_SESSION['success']);
+    unset($_SESSION['success2']);
 } else if (isset($_SESSION['error'])) {
     switch ($_SESSION['error']) {
         case 1:

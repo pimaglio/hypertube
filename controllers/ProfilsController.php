@@ -13,14 +13,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-function find_geoip()
-{
-    $ip = $_SERVER['REMOTE_ADDR'];
-    if (!$reader = new Reader('../GeoLite2-City.mmdb')) throw new Exception();
-    else
-        return $record = $reader->city($ip);
-}
-
 function htmldump($variable, $height = "300px")
 {
     echo "<pre style=\"border: 1px solid #000; height: {$height}; background-color: white; overflow: auto; margin: 0.5em;\">";
@@ -349,9 +341,9 @@ if (isset($_POST['createprofile']) && $_POST['createprofile'] === 'ok' && isset(
 }
 
 // REGISTER
-if (isset($_POST['register']) && $_POST['register'] === 'ok' && isset($_POST['login'])
+if (isset($_POST['register_42']) && $_POST['register_42'] === 'ok' && isset($_POST['login'])
     && isset($_POST['nom']) && isset($_POST['email']) && isset($_POST['password'])
-    && isset($_POST['password2'])) {
+    && isset($_POST['password2']) && ($_POST['42_id']) === '') {
     if (htmlspecialchars($_POST['nom']) !== $_POST['nom'] || htmlspecialchars($_POST['login'])
         !== $_POST['login'] || htmlspecialchars($_POST['email']) !== $_POST['email']) {
         $_SESSION['error'] = 5;
@@ -421,17 +413,18 @@ if (isset($_POST['register']) && $_POST['register'] === 'ok' && isset($_POST['lo
     if ($var === 1) {
         header('Location: ../view/register.php');
         exit();
-    } else {
+    }
+    else {
         $new_user->sendMail();
-        $_SESSION['success'] = 2;
-        header('Location: ../');
+        $_SESSION['success2'] = 2;
+        header('Location: ../index.php');
     }
 }
 
 // REGISTER 42
 if (isset($_POST['register_42']) && $_POST['register_42'] === 'ok' && isset($_POST['login'])
     && isset($_POST['nom']) && isset($_POST['email']) && isset($_POST['password'])
-    && isset($_POST['password2']) && isset($_POST['42_id'])) {
+    && isset($_POST['password2']) && !empty($_POST['42_id'])) {
     if (htmlspecialchars($_POST['nom']) !== $_POST['nom'] || htmlspecialchars($_POST['login'])
         !== $_POST['login'] || htmlspecialchars($_POST['email']) !== $_POST['email']) {
         $_SESSION['error'] = 5;
@@ -510,8 +503,9 @@ if (isset($_POST['register_42']) && $_POST['register_42'] === 'ok' && isset($_PO
         exit();
     } else {
         $new_user->sendMail();
-        $_SESSION['success'] = 2;
-        header('Location: ../');
+        $_SESSION['success2'] = 2;
+        unset($_SESSION['id_42']);
+        header('Location: ../index.php');
     }
 }
 

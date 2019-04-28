@@ -865,7 +865,7 @@ class account
 
     public function Connect_42()
     {
-        $stmt = $this->db_con->prepare("SELECT login FROM user_db WHERE id_42=:id_42");
+        $stmt = $this->db_con->prepare("SELECT valid, login, id FROM user_db WHERE id_42=:id_42");
         $stmt->execute(array(
             ":id_42" => $this->id_42
         ));
