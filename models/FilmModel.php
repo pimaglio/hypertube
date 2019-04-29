@@ -71,8 +71,8 @@ VALUES (:title, :title_fr, :creation, :casting,
         $query = 'SELECT * FROM film';
         $stmt = $this->db_con->prepare($query);
         $stmt->execute();
-        while ($stmt->fetch(PDO::FETCH_ASSOC))
-            array_push($arr, $stmt->fetch(PDO::FETCH_ASSOC));
+        while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
+            array_push($arr, $data);
         return $arr;
     }
 }
