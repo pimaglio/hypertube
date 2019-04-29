@@ -44,7 +44,7 @@
         color: white;
     }
 
-    .error-sql{
+    .error-sql {
         position: absolute;
         right: 0;
         left: 0;
@@ -52,7 +52,7 @@
         color: #820000;
     }
 
-    .success-sql{
+    .success-sql {
         position: absolute;
         right: 0;
         left: 0;
@@ -69,19 +69,21 @@
 </div>
 
 <div style="text-align: center !important;">
-<?php
-/**
- * Created by PhpStorm.
- * User: pimaglio
- * Date: 2019-02-06
- * Time: 14:28
- */
+    <?php
+    /**
+     * Created by PhpStorm.
+     * User: pimaglio
+     * Date: 2019-02-06
+     * Time: 14:28
+     */
 
-require_once("database.php");
-try {
-    $db = database_connect();
+    require_once("database.php");
+    require_once '../vendor/autoload.php';
+    include_once '../models/FilmModel.php';
+    try {
+        $db = database_connect();
 
-    $sql_create_user_db_tbl = <<<EOSQL
+        $sql_create_user_db_tbl = <<<EOSQL
 CREATE TABLE if not exists user_db (
   id int(11) NOT NULL AUTO_INCREMENT,
   login varchar(25) COLLATE utf8_unicode_ci NOT NULL,
@@ -99,7 +101,7 @@ CREATE TABLE if not exists user_db (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_unicode_ci
 EOSQL;
 
-    $sql_create_film_tbl = <<<EOSQL
+        $sql_create_film_tbl = <<<EOSQL
 CREATE TABLE IF NOT EXISTS film (
   id int (11) NOT NULL AUTO_INCREMENT,
   title varchar(255) NOT NULL,
@@ -118,44 +120,99 @@ CREATE TABLE IF NOT EXISTS film (
 EOSQL;
 
 
-    $sql_create_user = <<<EOSQL
+        $sql_create_user = <<<EOSQL
 INSERT INTO user_db (login, nom, password, email, valid)
 VALUES 
   ('root', 'root', '4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2', 'root@root.com', '1');
 EOSQL;
 
-    $msg = '';
-    $msg_err = '';
-
-    if ($r !== false) {
-
-        $r = $db->exec($sql_create_user_db_tbl);
-        $r = $db->exec($sql_create_user);
-        $r = $db->exec($sql_create_film_tbl);
+        $msg = '';
+        $msg_err = '';
 
         if ($r !== false) {
-            $msg = "Tables are created successfully!." . "<br>";
+
+            $r = $db->exec($sql_create_user_db_tbl);
+            $r = $db->exec($sql_create_user);
+            $r = $db->exec($sql_create_film_tbl);
+
+            if ($r !== false) {
+                $msg = "Tables are created successfully!." . "<br>";
+            } else {
+                $msg_err = "Error creating table." . "<br>";
+            }
+
         } else {
             $msg_err = "Error creating table." . "<br>";
         }
 
-    } else {
-        $msg_err = "Error creating table." . "<br>";
+        // display the message
+        if ($msg != '') {
+            echo "<h2 class='success-sql'>$msg<br><i class=\"far fa-smile-beam fa-9x\"></i></h2>" . "\n";
+            $delai = 2;
+            $url = '../index.php';
+            header("Refresh: $delai;url=$url");
+        } else if ($msg_err != '')
+            echo "<h2 class='error-sql'>$msg_err<br><i class=\"far fa-sad-cry fa-9x\"></i></h2>" . "\n";
+
+    } catch (PDOException $e) {
+        $msg2 = $e->getMessage();
+        echo "<br>" . "<h2 class='error-sql' >$msg2<br><i class=\"far fa-sad-cry fa-7x\"></i></h2>";
     }
 
-    // display the message
-    if ($msg != '') {
-        echo "<h2 class='success-sql'>$msg<br><i class=\"far fa-smile-beam fa-9x\"></i></h2>" . "\n";
-        $delai=2;
-        $url='../index.php';
-        header("Refresh: $delai;url=$url");
+    $token = new \Tmdb\ApiToken('eec9199c7c3efc546a7b7ea6d86ffcee');
+    $client = new \Tmdb\Client($token);
+    for ($i = 1; $i <= 10; $i++) {
+        $movie = $client->getMoviesApi()->getTopRated(array(
+            'page' => $i
+        ));
+        $movie_fr = $client->getMoviesApi()->getTopRated(array(
+            'page' => $i,
+            'language' => 'fr'
+        ));
+        foreach ($movie as $k => $v) {
+            if ($k == 'results') {
+                foreach ($v as $k1 => $v1) {
+                    $id = $v1['id'];
+                    $detail = $client->getMoviesApi()->getMovie($id);
+                    $credits = $client->getMoviesApi()->getCredits($id);
+                    $infos = [];
+                    $infos['title'] = $detail['title'];
+                    $infos['title_fr'] = $movie_fr[$k][$k1]['title'];
+                    $infos['overview'] = $detail['overview'];
+                    $infos['overview_fr'] = $movie_fr[$k][$k1]['overview'];
+                    $infos['date'] = $detail['release_date'];
+                    $infos['note'] = $detail['vote_average'];
+                    $infos['time'] = $detail['runtime'] . 'min';
+                    $infos['cast'] = NULL;
+                    for ($j = 0; $j <= 4; $j++) {
+                        if (!isset($credits['cast'][$j]))
+                            break;
+                        if ($j != 4)
+                            $infos['cast'] .= $credits['cast'][$j]['name'] . ' / ';
+                        else
+                            $infos['cast'] .= $credits['cast'][$j]['name'];
+                    }
+                    $configRepository = new \Tmdb\Repository\ConfigurationRepository($client);
+                    $config = $configRepository->load();
+                    $imageHelper = new \Tmdb\Helper\ImageHelper($config);
+                    $infos['img'] = 'http:' . $imageHelper->getUrl($detail['poster_path'], 'w500', 500, 80);
+                    $genre = new \Tmdb\Repository\GenreRepository($client);
+                    $gender_id = [];
+                    $gender = [];
+                    foreach ($movie[$k][$k1]['genre_ids'] as $kk => $vv)
+                        $gender_id[] .= $vv;
+                    $infos['genres'] = NULL;
+                    foreach ($gender_id as $kk => $vv) {
+                        $gender = $genre->load(intval($vv));
+                        $infos['genres'] .= $gender->getName() . ' ';
+                    }
+                    trim($infos['genres']);
+                    $seed = new Film($infos);
+                    $seed->insert_film();
+                }
+            }
+        }
     }
-    else if ($msg_err != '')
-        echo "<h2 class='error-sql'>$msg_err<br><i class=\"far fa-sad-cry fa-9x\"></i></h2>" . "\n";
 
-} catch (PDOException $e) {
-    $msg2 = $e->getMessage();
-    echo "<br>" . "<h2 class='error-sql' >$msg2<br><i class=\"far fa-sad-cry fa-7x\"></i></h2>";
-}
-?>
+    ?>
 </div>
