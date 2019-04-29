@@ -1357,3 +1357,97 @@ input#imagep4:hover {
     font-weight: 300;
     text-transform: uppercase;
 }
+
+.flexgallery{
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: wrap;
+    position: relative;
+    width: 80%;
+    margin: auto;
+}
+
+.card_movie{
+    width: 200px;
+    height: 300px;
+    position: relative;
+    margin: 80px;
+    flex: 0 1 200px;
+}
+
+.image_movie{
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 100%;
+}
+
+.image_movie:hover{
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+    background-color: #000000c2;
+}
+
+.card_movie_info{
+    padding: 10px;
+    color: white;
+}
+
+.card_movie_title{
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 300;
+    line-height: 20px;
+}
+
+.card_movie_year{
+    font-weight: 100;
+    font-size: 1rem;
+    float: left;
+}
+
+.card_movie_hover{
+    position: absolute;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    transition: all .3s;
+    animation: fadeIn 1s;
+}
+.card_movie_hover:hover{
+    background-color: #000000c2;
+    z-index: 10;
+    background-image: url('../images/play.svg');
+    background-size: 50%;
+    background-position-x: center;
+    background-position-y: center;
+    background-repeat: no-repeat;
+    transition: all .3s;
+    animation: fadeIn 1s;
+    cursor: pointer;
+    border-color: #4a148c;
+    box-shadow: 0 0 10px #4a148c;
+}
+
+.dejavu{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.rate{
+    float: right;
+    font-weight: 100;
+    font-size: 1rem;
+
+}
+
+.loader{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: white;
+    text-align: right;
+}

@@ -16,16 +16,58 @@ include('header_connect.php');
 
 <body>
 
-<div class="container">
+<div class="">
 
     <div class="homesuggest">
         <?php echo $titlesugggestion?>
     </div>
 
+    <div class="flexgallery" id="post-data">
+        <?php
+        if (!isset($_GET['last_id']))
+            $idf = 0;
+        else
+            $idf = $_GET['last_id'];
+        $data = recup_film_arr($idf);
+
+        include('data.php');
+
+        ?>
+        <div class="loader ajax-load text-center" style="display: none">
+            <h5><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading...</h5>
+        </div>
+    </div>
 </div>
 
 <script>
+    $(window).scroll(function() {
+        if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            var last_id = $(".post-id:last").attr("id");
+            loadMoreData(last_id);
+        }
+    });
 
+
+    function loadMoreData(last_id){
+        $.ajax(
+            {
+                url: '/view/loadMoreData.php?last_id=' + last_id,
+                type: "get",
+                beforeSend: function()
+                {
+                    $('.ajax-load').show();
+                }
+            })
+            .done(function(data)
+            {
+                $('.ajax-load').hide();
+                $("#post-data").append(data);
+            })
+            .fail(function(jqXHR, ajaxOptions, thrownError)
+            {
+                alert('server not responding...');
+            });
+    }
 </script>
 
 <script src="assets/js/materialize.js"></script>

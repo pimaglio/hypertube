@@ -1,6 +1,7 @@
 <?php
 require_once "../controllers/ProfilsController.php";
 require_once "../controllers/PopulariteController.php";
+require_once "../controllers/FilmController.php";
 
 if (!isset($_SESSION))
     session_start();

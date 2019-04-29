@@ -66,9 +66,9 @@ VALUES (:title, :title_fr, :creation, :casting,
         ));
     }
 
-    public function recup_film(){
+    public function recup_film($idf){
         $arr = [];
-        $query = 'SELECT * FROM film';
+        $query = 'SELECT * FROM film WHERE id > '."$idf".' LIMIT 20';
         $stmt = $this->db_con->prepare($query);
         $stmt->execute();
         while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
