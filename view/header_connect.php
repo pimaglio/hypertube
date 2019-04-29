@@ -57,13 +57,15 @@ if (!isset($_SESSION['loggued_on_user']))
             ?>
         </div>
     </li>
+    <li><a class="subheader">Menu Principal</a></li>
     <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
     <li>
         <div class="divider"></div>
     </li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+    <li><a class="subheader">Paramètres généraux</a></li>
+    <li><a href="account.php"><i class="material-icons">settings</i>Mon compte</a></li>
+    <li><a href="logout.php"><i class="material-icons">power_settings_new</i>Se déconnecter</a></li>
+    <li><a href="delete.php"><i class="material-icons">delete</i>Supprimer mon compte</a></li>
 </ul>
 
 <!--NOTIFICATIONS-->

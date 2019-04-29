@@ -53,7 +53,7 @@ include('header_alt.php');
     else
         $id_google = 0;
     echo "
-                <form id=\"register-form\" method=\"POST\" action=\"register.php\" enctype=\"multipart/form-data\">
+                <form id=\"register-form\" method=\"POST\" action=\"../controllers/ProfilsController.php\" enctype=\"multipart/form-data\">
                     <div class=\"row\">
                         <div style=\"margin-top: 15px; margin-bottom: 15px\" class=\"col s12 center\">
                             <a href=\"../controllers/googleauth.php\"><img class=\"auth_logo\" src=\"assets/images/google.png\"></a>

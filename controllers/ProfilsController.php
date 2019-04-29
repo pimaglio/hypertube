@@ -353,7 +353,7 @@ if (isset($_POST['createprofile']) && $_POST['createprofile'] === 'ok' && isset(
 // REGISTER
 if (isset($_POST['register_42']) && $_POST['register_42'] === 'ok' && isset($_POST['login'])
     && isset($_POST['nom']) && isset($_POST['email']) && isset($_POST['password'])
-    && isset($_POST['password2']) && ($_POST['42_id']) === '') {
+    && isset($_POST['password2']) && $_POST['42_id'] == 0 && $_POST['google_id'] == 0) {
     if (htmlspecialchars($_POST['nom']) !== $_POST['nom'] || htmlspecialchars($_POST['login'])
         !== $_POST['login'] || htmlspecialchars($_POST['email']) !== $_POST['email']) {
         $_SESSION['error'] = 5;
