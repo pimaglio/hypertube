@@ -6,7 +6,7 @@
  * Time: 15:33
  */
 
-class Seed
+class Film
 {
     private $title;
     private $title_fr;
@@ -17,6 +17,7 @@ class Seed
     private $time;
     private $cast;
     private $img;
+    private $genres;
     private $db_con;
 
 
@@ -40,12 +41,16 @@ class Seed
             $this->time = $arr['time'];
         if (array_key_exists('img', $arr))
             $this->img = $arr['img'];
+        if (array_key_exists('genres', $arr))
+            $this->genres = $arr['genres'];
         $this->db_con = database_connect();
     }
 
     public function insert_film(){
-        $query = 'INSERT INTO film (title, title_fr, creation_date, casting, duree, note, image, description, description_fr)
-VALUES (:title, :title_fr, :creation, :casting, :duree, :note, :image, :description, :description_fr)';
+        $query = 'INSERT INTO film (title, title_fr, creation_date,
+ casting, duree, note, image, description, description_fr, genres)
+VALUES (:title, :title_fr, :creation, :casting, 
+:duree, :note, :image, :description, :description_fr, :genres)';
         $stmt = $this->db_con->prepare($query);
         $stmt->execute(array(
             ":title" => $this->title,
@@ -56,8 +61,19 @@ VALUES (:title, :title_fr, :creation, :casting, :duree, :note, :image, :descript
             ":note" => $this->note,
             ":image" => $this->img,
             ":description" => $this->overview,
-            ":description_fr" => $this->overview_fr
+            ":description_fr" => $this->overview_fr,
+            ":genres" => $this->genres
         ));
+    }
+
+    public function recup_film(){
+        $arr = [];
+        $query = 'SELECT * FROM film';
+        $stmt = $this->db_con->prepare($query);
+        $stmt->execute();
+        while ($stmt->fetch(PDO::FETCH_ASSOC))
+            array_push($arr, $stmt->fetch(PDO::FETCH_ASSOC));
+        return $arr;
     }
 }
 

@@ -7,8 +7,15 @@
  */
 
 require_once '../vendor/autoload.php';
-include_once '../models/ResearchModel.php';
+include_once '../models/FilmModel.php';
 include '../view/header_alt.php';
+
+function recup_film_arr(){
+    $film = new Film([]);
+    $arr = $film->recup_film();
+    return $arr;
+}
+
 if (isset($_POST['research']) && $_POST['research'] == 'ok' && isset($_POST['film'])) {
     if (htmlspecialchars($_POST['film']) != $_POST['film']) {
         $_SESSION['error'] = 5;
@@ -25,7 +32,6 @@ if (isset($_POST['research']) && $_POST['research'] == 'ok' && isset($_POST['fil
             'page' => $i,
             'language' => 'fr'
         ));
-        htmldump($movie);
         foreach ($movie as $k => $v) {
             if ($k == 'results') {
                 foreach ($v as $k1 => $v1) {
@@ -33,22 +39,17 @@ if (isset($_POST['research']) && $_POST['research'] == 'ok' && isset($_POST['fil
                     $detail = $client->getMoviesApi()->getMovie($id);
                     $credits = $client->getMoviesApi()->getCredits($id);
                     $infos = [];
-                    $title = $detail['title'];
-                    $title_fr = $movie_fr[$k][$k1]['title'];
-                    $overview_fr = $movie_fr[$k][$k1]['overview'];
-                    $overview = $detail['overview'];
-                    $date = $detail['release_date'];
-                    $note = $detail['vote_average'];
-                    $time = $detail['runtime'] . 'min';
-                    $infos['title'] = $title;
-                    $infos['title_fr'] = $title_fr;
-                    $infos['overview'] = $overview;
-                    $infos['overview_fr'] = $overview_fr;
-                    $infos['date'] = $date;
-                    $infos['note'] = $note;
-                    $infos['time'] = $time;
+                    $infos['title'] = $detail['title'];
+                    $infos['title_fr'] = $movie_fr[$k][$k1]['title'];
+                    $infos['overview'] = $detail['overview'];
+                    $infos['overview_fr'] = $movie_fr[$k][$k1]['overview'];
+                    $infos['date'] = $detail['release_date'];
+                    $infos['note'] = $detail['vote_average'];
+                    $infos['time'] = $detail['runtime'] . 'min';
                     $infos['cast'] = NULL;
                     for ($j = 0; $j <= 4; $j++) {
+                        if (!isset($credits['cast'][$j]))
+                            break ;
                         if ($j != 4)
                             $infos['cast'] .= $credits['cast'][$j]['name'] . ' / ';
                         else
@@ -58,8 +59,18 @@ if (isset($_POST['research']) && $_POST['research'] == 'ok' && isset($_POST['fil
                     $config = $configRepository->load();
                     $imageHelper = new \Tmdb\Helper\ImageHelper($config);
                     $infos['img'] = 'http:' . $imageHelper->getUrl($detail['poster_path'], 'w500', 500, 80);
-                    echo $infos['img'];
-                    $seed = new Seed($infos);
+                    $genre = new \Tmdb\Repository\GenreRepository($client);
+                    $gender_id = [];
+                    $gender = [];
+                    foreach ($movie[$k][$k1]['genre_ids'] as $kk => $vv)
+                        $gender_id[] .= $vv;
+                    $infos['genres'] = NULL;
+                    foreach ($gender_id as $kk => $vv) {
+                        $gender = $genre->load(intval($vv));
+                        $infos['genres'] .= $gender->getName() . ' ';
+                    }
+                    trim($infos['genres']);
+                    $seed = new Film($infos);
                     $seed->insert_film();
                 }
             }
