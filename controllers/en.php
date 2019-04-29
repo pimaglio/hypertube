@@ -17,6 +17,8 @@ $menutitleparam = 'Global Settings';
 $menutitleparamAccount = 'My account';
 $menutitleparamLogout = 'Log out';
 $menutitleparamDelete = 'Delete my account';
+$menuitemSearch = 'Find movie';
+$menuitemPopular = 'Most popular movies';
 
 /*INSCRIPTION FORM*/
 
@@ -43,6 +45,15 @@ $loginforgot = 'Forgot your password?';
 $loginreset = 'Reset password';
 $title_spelog = 'Sign in with:';
 $title_basiclog = 'Or basic sign in';
+
+/*EDIT PROFIL*/
+
+$title1 = 'My profile';
+$title2 = 'INFORMATIONS';
+$updatebtn = 'Update';
+
+/*SUGGEST*/
+$titleresult = 'movie(s) found';
 
 /*HOME SUGGEST*/
 

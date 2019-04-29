@@ -22,8 +22,8 @@ include('header_connect.php');
     <div class="col s12 panel_info">
         <div class="title_account">
             <img class="image_title_account" src="assets/images/user_info.svg">
-            <h2 style="margin-left: 100px;" class="title-form-alt">Mes données<br><span
-                        class="title-form">personelles</span></h2>
+            <h2 style="margin-left: 100px;" class="title-form-alt"><?php echo $title1 ?><br><span
+                        class="title-form"></span><?php echo $title2 ?></h2>
         </div>
     </div>
     <?php
@@ -43,38 +43,38 @@ include('header_connect.php');
                         <div class=\"input-field col s6 fade-in three\">
                             <i class=\"material-icons prefix\">account_circle</i>
                             <input id=\"nom\" type=\"text\" class=\"validate\" pattern=\"[A-Za-z\séèâêëçû -]+\" name=\"nom\" maxlength=\"50\" value='$nom' required>
-                            <span class=\"helper-text\" data-error=\"Format invalide: (A-z) et (-)\" data-success=\"Format valide\"></span>
-                            <label for=\"nom\">Nom et Prénom</label>
+                            <span class=\"helper-text\" data-error=\"$formnameError\" data-success=\"$formnameSuccess\"></span>
+                            <label for=\"nom\">$formname</label>
                         </div>
                         <div class=\"input-field col s6 fade-in four\">
                             <i class=\"material-icons prefix\">account_circle</i>
                             <input id=\"login\" type=\"text\" class=\"validate\" pattern=\"[A-Za-z-0-9\s -]+\" name=\"login\" maxlength=\"25\" value='$login' required>
-                            <span class=\"helper-text\" data-error=\"Format invalide: (A-z), (0-9), (-)\" data-success=\"Format valide\"></span>
-                            <label for=\"login\">Nom d'utilisateur</label>
+                            <span class=\"helper-text\" data-error=\"$formloginError\" data-success=\"$formnameSuccess\"></span>
+                            <label for=\"login\">$formlogin</label>
                         </div>
                         <div class=\"input-field col s12 fade-in five\">
                             <i class=\"material-icons prefix\">email</i>
                             <input id=\"email\" type=\"email\" class=\"validate\" name=\"email\" value='$email' required>
-                            <label for=\"email\">Adresse email</label>
+                            <label for=\"email\">$formemail</label>
                         </div>
                         <div class=\"input-field col s6 fade-in six\">
                             <i class=\"material-icons prefix\">vpn_key</i>
                             <input id=\"password\" type=\"password\" class=\"validate\" pattern=\"(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}\" name=\"password\" maxlength=\"25\">
-                            <span class=\"helper-text\" data-error=\"Format invalide: Doit contenir 6 caractères minimum dont 1 caractère special (!@#$%^&*(),.?:{}|<>)\" data-success=\"Format valide\"></span>
-                            <label for=\"password\">Mot de passe</label>
+                            <span class=\"helper-text\" data-error=\"$formpasswordError\" data-success=\"$formnameSuccess\"></span>
+                            <label for=\"password\">$formpassword1</label>
                         </div>
                         <div class=\"input-field col s6 fade-in seven\">
                             <i class=\"material-icons prefix\">vpn_key</i>
                             <input id=\"password2\" type=\"password\" class=\"validate\" pattern=\"(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}\" name=\"password2\" maxlength=\"25\">
-                            <span class=\"helper-text\" data-error=\"Les mots de passe ne correspondent pas\" data-success=\"Format valide\"></span>
-                            <label for=\"password2\">Mot de passe (confirmation)</label>
+                            <span class=\"helper-text\" data-error=\"$formpasswordError2\" data-success=\"$formnameSuccess\"></span>
+                            <label for=\"password2\">$formpassword2</label>
                         </div>
                     </div>
                     <div style=\"text-align: center\" class=\"input-field col s12\">
                         <img src=\"$pic\" class=\"preview img_up\"/>
                         <div class=\"file-field input-field\">
                             <div class=\"btn\">
-                                <span>Choisir</span>
+                                <span>$formpic</span>
                                 <input type=\"file\" name=\"fileToUpload\" id=\"fileToUpload\" data-preview=\".preview\" $require/>
                                 <input type='hidden' name='42pic' value='$pic'/>
                             </div>
@@ -85,7 +85,7 @@ include('header_connect.php');
                     </div>
                     <input type=\"hidden\" name=\"user_modif\" value=\"ok\">
                     <div style=\"text-align: center\">
-                        <button class=\"btn-large waves-effect waves-light accent-3 fade-in eight\" type=\"submit\" name=\"submit\" value=\"Créer mon profil\">Mettre à jour
+                        <button class=\"btn-large waves-effect waves-light accent-3 fade-in eight\" type=\"submit\" name=\"submit\" value=\"Créer mon profil\">$updatebtn
                             <i class=\"material-icons right\">send</i>
                         </button>
                     </div>

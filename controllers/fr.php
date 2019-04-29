@@ -17,7 +17,8 @@ $menutitleparam = 'Paramètres Généraux';
 $menutitleparamAccount = 'Mon compte';
 $menutitleparamLogout = 'Se déconnecter';
 $menutitleparamDelete = 'Supprimer mon compte';
-
+$menuitemSearch = 'Rechercher un film';
+$menuitemPopular = 'Les films populaires';
 /*INSCRIPTION FORM*/
 
 $formname = 'Nom et Prénom';
@@ -38,13 +39,24 @@ $title_spesign = 'S\'enregistrer avec:';
 $title_basicsign = 'Ou s\'inscrire normalement:';
 
 /*LOGIN FORM*/
+
 $loginbtn = 'Se connecter';
 $loginforgot = 'Mot de passe oublié ?';
 $loginreset = 'Réinitialiser le mot de passe';
 $title_spelog = 'Se connecter avec:';
 $title_basiclog = 'Se connecter normalement:';
 
+/*EDIT PROFIL*/
 
-/*HOME SUGGEST*/
+$title1 = 'Mes données';
+$title2 = 'PERSONNELLES';
+$updatebtn = 'Mettre à jour';
+
+/*SUGGEST*/
+$titleresult = 'film(s) trouvé(s)';
+
+/*HOME*/
 
 $titlesugggestion = 'Les films les plus populaires:';
+
+

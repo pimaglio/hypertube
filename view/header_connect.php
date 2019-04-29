@@ -79,7 +79,8 @@ if (isset($_SESSION['lang'])){
         </div>
     </li>
     <li><a class="subheader"><?php echo $menutitle?></a></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="search.php"><i class="material-icons">search</i><?php echo $menuitemSearch?></a></li>
+    <li><a href="index.php"><i class="material-icons">star</i><?php echo $menuitemPopular?></a></li>
     <li>
         <div class="divider"></div>
     </li>
