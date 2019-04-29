@@ -493,51 +493,6 @@ class infos
         $stmt->execute(array(
             ":id" => $id
         ));
-        $query = 'DELETE FROM `report` WHERE id_usr=:id OR id_reporter=:id';
-        $stmt = $this->db_con->prepare($query);
-        $stmt->execute(array(
-            ":id" => $id
-        ));
-        $query = 'DELETE FROM `location` WHERE id_usr=:id';
-        $stmt = $this->db_con->prepare($query);
-        $stmt->execute(array(
-            ":id" => $id
-        ));
-        $query = 'DELETE FROM `likes` WHERE id_usr=:id OR id_usr_l=:id';
-        $stmt = $this->db_con->prepare($query);
-        $stmt->execute(array(
-            ":id" => $id
-        ));
-        $query = 'DELETE FROM `interest` WHERE id_usr=:id';
-        $stmt = $this->db_con->prepare($query);
-        $stmt->execute(array(
-            ":id" => $id
-        ));
-        $query = 'DELETE FROM `discussion` WHERE id_usr=:id OR id_usr_l=:id';
-        $stmt = $this->db_con->prepare($query);
-        $stmt->execute(array(
-            ":id" => $id
-        ));
-        $query = 'DELETE FROM `block` WHERE id_usr=:id OR id_blocker=:id';
-        $stmt = $this->db_con->prepare($query);
-        $stmt->execute(array(
-            ":id" => $id
-        ));
-        $query = 'DELETE FROM `visit` WHERE id_usr=:id OR id_usr_h=:id';
-        $stmt = $this->db_con->prepare($query);
-        $stmt->execute(array(
-            ":id" => $id
-        ));
-        $query = 'DELETE FROM data WHERE id_usr=:id';
-        $stmt = $this->db_con->prepare($query);
-        $stmt->execute(array(
-            ":id" => $id
-        ));
-        $query = 'DELETE FROM photo WHERE id_usr=:id';
-        $stmt = $this->db_con->prepare($query);
-        $stmt->execute(array(
-            ":id" => $id
-        ));
         header('Location: index.php');
     }
 
@@ -789,12 +744,13 @@ class account
     public function edit_profil($id)
     {
         try {
-            $stmt = $this->db_con->prepare("UPDATE user_db SET login=:login, email=:email, password=:password, nom=:nom WHERE id='$id'");
+            $stmt = $this->db_con->prepare("UPDATE user_db SET login=:login, email=:email, password=:password, nom=:nom, pic=:pic WHERE id='$id'");
             $stmt->execute(array(
                 ":login" => $this->login,
                 ":email" => $this->email,
                 ":password" => $this->password,
-                ":nom" => $this->nom
+                ":nom" => $this->nom,
+                ":pic" => $this->pic
             ));
             unset($_SESSION['loggued_on_user']);
             $_SESSION['loggued_on_user'] = $this->login;
@@ -896,6 +852,7 @@ class account
             return 3;
         $_SESSION['loggued_on_user'] = $fetched['login'];
         $_SESSION['id'] = $fetched['id'];
+        $_SESSION['lang'] = 'en';
         return 0;
     }
 
@@ -910,6 +867,7 @@ class account
             return 2;
         $_SESSION['loggued_on_user'] = $fetched['login'];
         $_SESSION['id'] = $fetched['id'];
+        $_SESSION['lang'] = 'en';
         return 0;
     }
 
@@ -924,6 +882,7 @@ class account
             return 2;
         $_SESSION['loggued_on_user'] = $fetched['login'];
         $_SESSION['id'] = $fetched['id'];
+        $_SESSION['lang'] = 'en';
         return 0;
     }
 

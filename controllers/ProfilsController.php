@@ -74,56 +74,6 @@ function recup_inter_id($id)
     return $db_con->array_inter_id($id);
 }
 
-/*LIKE*/
-
-function is_like($id_usr, $id_usr_l)
-{
-    $db_con = new like(array(
-        'id_usr' => $id_usr,
-        'id_usr_l' => $id_usr_l
-    ));
-    $res = $db_con->if_like();
-    return $res;
-}
-
-function is_like_user($id_usr, $id_usr_l)
-{
-    $db_con = new like(array(
-        'id_usr' => $id_usr,
-        'id_usr_l' => $id_usr_l
-    ));
-    $res = $db_con->if_like_user();
-    return $res;
-}
-
-function is_match($id_usr, $id_usr_l)
-{
-    $db_con = new like(array(
-        'id_usr' => $id_usr,
-        'id_usr_l' => $id_usr_l
-    ));
-    $res = $db_con->if_match();
-    return $res;
-}
-
-function get_like($id)
-{
-    $db_con = new like(array(
-        'id_usr' => $id
-    ));
-    $res = $db_con->fetch_my_like();
-    return $res;
-}
-
-function get_like2($id)
-{
-    $db_con = new like(array(
-        'id_usr' => $id
-    ));
-    $res = $db_con->fetch_my_like2();
-    return $res;
-}
-
 /*42 AUTH ACTION*/
 
 function get_42_id($id)
@@ -144,75 +94,6 @@ function get_google_id($id)
     return $db_con->select_google_id();
 }
 
-
-if (isset($_POST['like']) && $_POST['like'] === 'add') {
-    $db_con = new like(array(
-        'id_usr' => $_POST['id_usr'],
-        'id_usr_l' => $_POST['id_usr_l'],
-    ));
-    $db_con->add_like();
-    add_popularite($_POST['id_usr_l'], 100);
-    $res = is_match($_POST['id_usr'], $_POST['id_usr_l']);
-    if ($res == 1) {
-        $_SESSION['match'] = 1;
-        add_popularite($_POST['id_usr_l'], 200);
-        add_popularite($_POST['id_usr'], 200);
-    }
-
-    header('Location: ../view/profile.php?id=' . $_POST['id']);
-}
-
-if (isset($_POST['like']) && $_POST['like'] === 'del') {
-    $db_con = new like(array(
-        'id_usr' => $_POST['id_usr'],
-        'id_usr_l' => $_POST['id_usr_l'],
-    ));
-    $db_con->del_like();
-    add_popularite($_POST['id_usr_l'], -100);
-    if (isset($_POST['likepage']))
-        header('Location: ../view/like.php');
-    else
-        header('Location: ../view/profile.php?id=' . $_POST['id']);
-}
-
-/*MESSAGE*/
-
-if (isset($_POST['send']) && $_POST['send'] === 'ok') {
-    $message = $_POST['message'];
-    if ($message != htmlspecialchars($_POST['message'])) {
-        $_SESSION['error'] = 5;
-        header('Location: ../view/message.php?id=' . $_POST['id_usr_l']);
-        exit;
-    }
-    $db_con = new discussion(array(
-        'id_usr' => $_POST['id_usr'],
-        'id_usr_l' => $_POST['id_usr_l'],
-        'message' => htmlspecialchars($_POST['message'])
-    ));
-    $db_con->add_message();
-    header('Location: ../view/message.php?id=' . $_POST['id_usr_l']);
-}
-
-function get_message($id_usr, $id_usr_l)
-{
-    $db_con = new discussion(array(
-        'id_usr' => $id_usr,
-        'id_usr_l' => $id_usr_l
-    ));
-    $res = $db_con->fetch_message();
-    return $res;
-}
-
-function get_all_message($id_usr)
-{
-    $db_con = new discussion(array(
-        'id_usr' => $id_usr,
-    ));
-    $res = $db_con->fetch_all_message();
-    return $res;
-}
-
-
 // MODIF USER
 
 if (isset($_POST['user_modif']) && $_POST['user_modif'] === 'ok' && isset($_POST['login'])
@@ -229,6 +110,40 @@ if (isset($_POST['user_modif']) && $_POST['user_modif'] === 'ok' && isset($_POST
         header('Location: ../view/account.php');
         exit();
     }
+    if (!empty($_FILES["fileToUpload"]["size"])) {
+        /*    UPLOAD IMAGE*/
+        $target_dir = "../upload/";
+        $target_file = $target_dir . date('Y-m-d_g:i:s') . ".png";
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        // Check if image file is a actual image or fake image
+        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+        if ($check === false) {
+            $_SESSION['error'] = 13;
+            header('Location: ../view/account.php');
+            exit();
+        }
+        // Check file size
+        if ($_FILES["fileToUpload"]["size"] > 5000000) {
+            $_SESSION['error'] = 14;
+            header('Location: ../view/account.php');
+            exit();
+        }
+        // Allow certain file formats
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif") {
+            $_SESSION['error'] = 15;
+            header('Location: ../view/account.php');
+            exit();
+        }
+        if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            $_SESSION['error'] = 15;
+            header('Location: ../view/account.php');
+            exit();
+        }
+    }
+    if (!empty($_POST['pic']))
+        $target_file = $_POST['pic'];
     if (!empty($_POST['password']) && !empty($_POST['password2'])) {
         if (strlen($_POST['login']) > 25) {
             $_SESSION['error'] = 1;
@@ -272,7 +187,8 @@ if (isset($_POST['user_modif']) && $_POST['user_modif'] === 'ok' && isset($_POST
             'login' => $_POST['login'],
             'password' => $password,
             'email' => $_POST['email'],
-            'nom' => $_POST['nom']
+            'nom' => $_POST['nom'],
+            'pic' => $target_file
         ));
         $db->edit_profil($id);
         unset($_SESSION['error']);
@@ -280,73 +196,6 @@ if (isset($_POST['user_modif']) && $_POST['user_modif'] === 'ok' && isset($_POST
         $_SESSION['success'] = 1;
         $_SESSION['loggued_on_user'] = $_POST['login'];
         header('Location: ../view/account.php');
-    }
-}
-
-// MODIF DATA ET INTERET
-
-if (isset($_POST['data_modif']) && $_POST['data_modif'] === 'ok' && isset($_POST['age']) && isset($_POST['location'])
-    && isset($_POST['sexe']) && isset($_POST['orientation']) && isset($_POST['bio'])) {
-    if (htmlspecialchars($_POST['age']) !== $_POST['age'] || htmlspecialchars($_POST['sexe']) !== $_POST['sexe']
-        || htmlspecialchars($_POST['location']) !== $_POST['location'] || htmlspecialchars($_POST['bio']) !== $_POST['bio']) {
-        $_SESSION['error'] = 5;
-        header('Location: ../view/account.php');
-        exit();
-    }
-    $db_con = new infos($_POST);
-    $db_con->edit_data();
-    $inte = $db_con->array_inter();
-    unset($inte['id']);
-    unset($inte['id_usr']);
-    $inter = [];
-    foreach ($_POST as $k => $v) {
-        if ($v == 101)
-            $inter[$k] = $v;
-    }
-    $db_con->edit_interest($inte, $inter);
-    $_SESSION['success'] = 1;
-    header('Location: ../view/account.php');
-}
-// CREATEPROFILE
-
-if (isset($_POST['createprofile']) && $_POST['createprofile'] === 'ok' && isset($_POST['sexe']) && isset($_POST['age'])
-    && isset($_POST['location']) && isset($_POST['orientation']) && isset($_POST['bio'])) {
-    $arr = [];
-    if (($b = htmlspecialchars($_POST['bio'])) !== $_POST['bio'] ||
-        ($l = htmlspecialchars($_POST['location'])) !== $_POST['location']) {
-        $_SESSION['error'] = 5;
-        header('Location: ../view/createprofile.php');
-        exit();
-    } else {
-        $arr['sexe'] = $_POST['sexe'];
-        $arr['age'] = $_POST['age'];
-        $arr['location'] = $_POST['location'];
-        $arr['orientation'] = $_POST['orientation'];
-        $arr['bio'] = $_POST['bio'];
-        $db_con = new infos($arr);
-        $db_con->add_data();
-        $inte = [];
-        foreach ($_POST as $k => $v) {
-            if ($v == 101)
-                $inte[$k] = $v;
-        }
-        $db_con->add_interest($inte);
-        $db_con->profile_complete();
-        $_SESSION['success'] = 6;
-        $_SESSION['loggued_on_user'] = $_SESSION['loggued_but_not_complet'];
-        $db = new account(["login" => $_SESSION['loggued_on_user']]);
-        $db->set_statut(1);
-        try {
-            $record = find_geoip();
-            $loc = new location([$record->city->name, $record->postal->code, $record->location->latitude, $record->location->longitude, 0]);
-            $loc->add_loc($_SESSION['id']);
-        } catch (Exception $e) {
-            $loc = new location(['Lyon', '69002', '45.7392364', '4.8174527', 2]);
-            $loc->add_loc($_SESSION['id']);
-        }
-        $db_con->new_pic();
-        unset($_SESSION['loggued_but_not_complet']);
-        header("Location: ../view");
     }
 }
 
@@ -709,7 +558,7 @@ if (isset($_POST['forgot']) && $_POST['forgot'] === 'ok' && isset($_POST['login'
     }
 }
 
-// DELETE ACCOUNT A FINIR pour toutes les tables
+// DELETE ACCOUNT
 
 function delete_account()
 {

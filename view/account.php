@@ -27,6 +27,16 @@ include('header_connect.php');
         </div>
     </div>
     <?php
+    $user = recup_user();
+    $nom = $user['nom'];
+    $login = $user['login'];
+    $email = $user['email'];
+    $pic = $user['pic'];
+    if (!empty($pic))
+        $require = '';
+    else
+        $require = 'required';
+
     echo "
                 <form id=\"register-form\" method=\"POST\" action=\"../controllers/ProfilsController.php\" enctype=\"multipart/form-data\">
                     <div class=\"row\">
@@ -49,13 +59,13 @@ include('header_connect.php');
                         </div>
                         <div class=\"input-field col s6 fade-in six\">
                             <i class=\"material-icons prefix\">vpn_key</i>
-                            <input id=\"password\" type=\"password\" class=\"validate\" pattern=\"(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}\" name=\"password\" maxlength=\"25\" required>
+                            <input id=\"password\" type=\"password\" class=\"validate\" pattern=\"(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}\" name=\"password\" maxlength=\"25\">
                             <span class=\"helper-text\" data-error=\"Format invalide: Doit contenir 6 caractères minimum dont 1 caractère special (!@#$%^&*(),.?:{}|<>)\" data-success=\"Format valide\"></span>
                             <label for=\"password\">Mot de passe</label>
                         </div>
                         <div class=\"input-field col s6 fade-in seven\">
                             <i class=\"material-icons prefix\">vpn_key</i>
-                            <input id=\"password2\" type=\"password\" class=\"validate\" pattern=\"(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}\" name=\"password2\" maxlength=\"25\" required>
+                            <input id=\"password2\" type=\"password\" class=\"validate\" pattern=\"(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}\" name=\"password2\" maxlength=\"25\">
                             <span class=\"helper-text\" data-error=\"Les mots de passe ne correspondent pas\" data-success=\"Format valide\"></span>
                             <label for=\"password2\">Mot de passe (confirmation)</label>
                         </div>
@@ -73,11 +83,9 @@ include('header_connect.php');
                             </div>
                         </div>
                     </div>
-                    <input type=\"hidden\" name=\"register_42\" value=\"ok\">
-                    <input type='hidden' name='42_id' value='$id_42'>
-                    <input type='hidden' name='google_id' value='$id_google'>
+                    <input type=\"hidden\" name=\"user_modif\" value=\"ok\">
                     <div style=\"text-align: center\">
-                        <button class=\"btn-large waves-effect waves-light accent-3 fade-in eight\" type=\"submit\" name=\"submit\" value=\"Créer mon profil\">S'inscrire
+                        <button class=\"btn-large waves-effect waves-light accent-3 fade-in eight\" type=\"submit\" name=\"submit\" value=\"Créer mon profil\">Mettre à jour
                             <i class=\"material-icons right\">send</i>
                         </button>
                     </div>
@@ -107,6 +115,17 @@ include('header_connect.php');
 
     password.onchange = validatePassword;
     confirm_password.onkeyup = validatePassword;
+
+    $(function () {
+        $("input[data-preview]").change(function () {
+            var input = $(this);
+            var oFReader = new FileReader();
+            oFReader.readAsDataURL(this.files[0]);
+            oFReader.onload = function (oFREvent) {
+                $(input.data('preview')).attr('src', oFREvent.target.result);
+            };
+        });
+    })
 </script>
 
 </body>

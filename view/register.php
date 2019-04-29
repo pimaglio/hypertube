@@ -12,6 +12,12 @@ if (isset($_SESSION['loggued_on_user']))
     header("Location: index.php");
 
 include('header_alt.php');
+if (isset($_SESSION['lang'])){
+    if ($_SESSION['lang'] === 'en')
+        include_once '../controllers/en.php';
+    if ($_SESSION['lang'] === 'fr')
+        include_once '../controllers/fr.php';
+}
 ?>
 
 <body>
@@ -24,7 +30,7 @@ include('header_alt.php');
         <div class="title_account2">
             <img class="image_title_account" src="assets/images/createprofil.svg">
             <h2 style="margin-left: 100px;" class="title-form-alt">Inscription<br><span
-                        class="title-form">Sign in</span></h2>
+                        class="title-form">Sign up</span></h2>
         </div>
     </div>
     <?php
@@ -55,45 +61,49 @@ include('header_alt.php');
     echo "
                 <form id=\"register-form\" method=\"POST\" action=\"../controllers/ProfilsController.php\" enctype=\"multipart/form-data\">
                     <div class=\"row\">
-                        <div style=\"margin-top: 15px; margin-bottom: 15px\" class=\"col s12 center\">
+                        <p class='title_login1'>$title_spesign</p>
+                        <div style=\"margin-top: 15px; margin-bottom: 15px\" class=\"col s6 center\">
                             <a href=\"../controllers/googleauth.php\"><img class=\"auth_logo\" src=\"assets/images/google.png\"></a>
+                        </div>
+                        <div style=\"margin-top: 15px; margin-bottom: 15px\" class=\"col s6 center\">
                             <a href=\"42auth.php\"><img class=\"auth_logo\" src=\"assets/images/42_Logo.svg\"></a>
                         </div>
+                        <p class='title_login1'>$title_basicsign</p>
                         <div class=\"input-field col s6 fade-in three\">
                             <i class=\"material-icons prefix\">account_circle</i>
                             <input id=\"nom\" type=\"text\" class=\"validate\" pattern=\"[A-Za-z\séèâêëçû -]+\" name=\"nom\" maxlength=\"50\" value='$nom' required>
-                            <span class=\"helper-text\" data-error=\"Format invalide: (A-z) et (-)\" data-success=\"Format valide\"></span>
-                            <label for=\"nom\">Nom et Prénom</label>
+                            <span class=\"helper-text\" data-error=\"$formnameError\" data-success=\"$formnameSuccess\"></span>
+                            <label for=\"nom\">$formname</label>
                         </div>
                         <div class=\"input-field col s6 fade-in four\">
                             <i class=\"material-icons prefix\">account_circle</i>
                             <input id=\"login\" type=\"text\" class=\"validate\" pattern=\"[A-Za-z-0-9\s -]+\" name=\"login\" maxlength=\"25\" value='$login' required>
-                            <span class=\"helper-text\" data-error=\"Format invalide: (A-z), (0-9), (-)\" data-success=\"Format valide\"></span>
-                            <label for=\"login\">Nom d'utilisateur</label>
+                            <span class=\"helper-text\" data-error=\"$formloginError\" data-success=\"$formnameSuccess\"></span>
+                            <label for=\"login\">$formlogin</label>
                         </div>
                         <div class=\"input-field col s12 fade-in five\">
                             <i class=\"material-icons prefix\">email</i>
                             <input id=\"email\" type=\"email\" class=\"validate\" name=\"email\" value='$email' required>
-                            <label for=\"email\">Adresse email</label>
+                            <label for=\"email\">$formemail</label>
                         </div>
                         <div class=\"input-field col s6 fade-in six\">
                             <i class=\"material-icons prefix\">vpn_key</i>
                             <input id=\"password\" type=\"password\" class=\"validate\" pattern=\"(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}\" name=\"password\" maxlength=\"25\" required>
-                            <span class=\"helper-text\" data-error=\"Format invalide: Doit contenir 6 caractères minimum dont 1 caractère special (!@#$%^&*(),.?:{}|<>)\" data-success=\"Format valide\"></span>
-                            <label for=\"password\">Mot de passe</label>
+                            <span class=\"helper-text\" data-error=\"$formpasswordError\" data-success=\"$formnameSuccess\"></span>
+                            <label for=\"password\">$formpassword1</label>
                         </div>
                         <div class=\"input-field col s6 fade-in seven\">
                             <i class=\"material-icons prefix\">vpn_key</i>
                             <input id=\"password2\" type=\"password\" class=\"validate\" pattern=\"(?=.*[!@#$%^&*(),.?:{}|<>]).{6,}\" name=\"password2\" maxlength=\"25\" required>
-                            <span class=\"helper-text\" data-error=\"Les mots de passe ne correspondent pas\" data-success=\"Format valide\"></span>
-                            <label for=\"password2\">Mot de passe (confirmation)</label>
+                            <span class=\"helper-text\" data-error=\"$formpasswordError2\" data-success=\"$formnameSuccess\"></span>
+                            <label for=\"password2\">$formpassword2</label>
                         </div>
                     </div>
                     <div style=\"text-align: center\" class=\"input-field col s12\">
                         <img src=\"$pic\" class=\"preview img_up\"/>
                         <div class=\"file-field input-field\">
                             <div class=\"btn\">
-                                <span>Choisir</span>
+                                <span>$formpic</span>
                                 <input type=\"file\" name=\"fileToUpload\" id=\"fileToUpload\" data-preview=\".preview\" $require/>
                                 <input type='hidden' name='42pic' value='$pic'/>
                             </div>
@@ -106,16 +116,16 @@ include('header_alt.php');
                     <input type='hidden' name='42_id' value='$id_42'>
                     <input type='hidden' name='google_id' value='$id_google'>
                     <div style=\"text-align: center\">
-                        <button class=\"btn-large waves-effect waves-light accent-3 fade-in eight\" type=\"submit\" name=\"submit\" value=\"Créer mon profil\">S'inscrire
+                        <button class=\"btn-large waves-effect waves-light accent-3 fade-in eight\" type=\"submit\" name=\"submit\" value=\"Créer mon profil\">$formbtn
                             <i class=\"material-icons right\">send</i>
                         </button>
                     </div>
                 </form>
+                <div style=\"text-align: center; margin-top: 50px\">
+                    <p class=\"connect fade-in seven\">$formconnect1 <a class=\"link\" href=\"login.php\">$formconnect2</a></p>
+                </div>
             ";
     ?>
-    <div style="text-align: center; margin-top: 50px">
-        <p class="connect fade-in seven">Tu es déjà inscrit ? <a class="link" href="login.php">Connecte-toi</a></p>
-    </div>
 </div>
 
 <script src="assets/js/materialize.js"></script>

@@ -6,6 +6,22 @@ if (!isset($_SESSION)) {
 if (isset($_SESSION['loggued_on_user']))
         header("Location: ./view");
 
+if (!isset($_SESSION['lang']))
+    $_SESSION['lang'] = 'en';
+if (isset($_GET['lang'])){
+    if ($_GET['lang'] === 'fr')
+        $_SESSION['lang'] = 'fr';
+    if ($_GET['lang'] === 'en')
+        $_SESSION['lang'] = 'en';
+}
+
+if (isset($_SESSION['lang'])){
+    if ($_SESSION['lang'] === 'en')
+        include_once 'controllers/en.php';
+    if ($_SESSION['lang'] === 'fr')
+        include_once 'controllers/fr.php';
+}
+
 ?>
 
 
@@ -29,14 +45,24 @@ if (isset($_SESSION['loggued_on_user']))
 <body>
 
 <div class="home_page row">
+    <ul style="display: inline-flex">
+        <?php
+        $url_fr = $_SERVER['PHP_SELF'] . "?lang=fr";
+        $url_en = $_SERVER['PHP_SELF'] . "?lang=en";
+        echo "
+            <li style='margin-right: 20px'><a href=\"$url_fr\"><img class=\"flag\" src=\"view/assets/images/fr.png\"></a></li>
+            <li><a href=\"$url_en\"><img class=\"flag\" src=\"view/assets/images/en.png\"></a></li>            
+            ";
+        ?>
+    </ul>
     <h1 class="logo_home fade-in one">
         Hypertube
     </h1>
     <div style="margin-top: 400px">
         <a href="view/register.php" class="waves-effect waves-light btn-large blue"><i
-                    class="material-icons left">create</i>Inscription</a>
+                    class="material-icons left">create</i><?php echo $signinbtn ?></a>
         <a href="view/login.php" class="waves-effect waves-light btn-large"><i
-                    class="material-icons left">person</i>Connexion</a>
+                    class="material-icons left">person</i><?php echo $signupbtn ?></a>
     </div>
 </div>
 

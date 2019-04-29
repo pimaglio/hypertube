@@ -8,6 +8,19 @@ if (!isset($_SESSION))
 if (!isset($_SESSION['loggued_on_user']))
     header('Location: ../index.php');
 
+if (isset($_GET['lang'])){
+    if ($_GET['lang'] === 'fr')
+        $_SESSION['lang'] = 'fr';
+    if ($_GET['lang'] === 'en')
+        $_SESSION['lang'] = 'en';
+}
+
+if (isset($_SESSION['lang'])){
+    if ($_SESSION['lang'] === 'en')
+        include_once '../controllers/en.php';
+    if ($_SESSION['lang'] === 'fr')
+        include_once '../controllers/fr.php';
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,6 +44,14 @@ if (!isset($_SESSION['loggued_on_user']))
     <div class="nav-wrapper">
         <a href="../" class="brand-logo center logo_home"><i class="fas fa-film"></i>Hypertube</a>
         <ul class="right hide-on-med-and-down">
+            <?php
+            $url_fr = $_SERVER['PHP_SELF'] . "?lang=fr";
+            $url_en = $_SERVER['PHP_SELF'] . "?lang=en";
+            echo "
+            <li><a href=\"$url_fr\"><img class=\"flag\" src=\"assets/images/fr.png\"></a></li>
+            <li><a href=\"$url_en\"><img class=\"flag\" src=\"assets/images/en.png\"></a></li>            
+            ";
+            ?>
             <li><a href="logout.php"><i class="material-icons">power_settings_new</i></a></li>
         </ul>
         <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
@@ -57,15 +78,15 @@ if (!isset($_SESSION['loggued_on_user']))
             ?>
         </div>
     </li>
-    <li><a class="subheader">Menu Principal</a></li>
+    <li><a class="subheader"><?php echo $menutitle?></a></li>
     <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
     <li>
         <div class="divider"></div>
     </li>
-    <li><a class="subheader">Paramètres généraux</a></li>
-    <li><a href="account.php"><i class="material-icons">settings</i>Mon compte</a></li>
-    <li><a href="logout.php"><i class="material-icons">power_settings_new</i>Se déconnecter</a></li>
-    <li><a href="delete.php"><i class="material-icons">delete</i>Supprimer mon compte</a></li>
+    <li><a class="subheader"><?php echo $menutitleparam?></a></li>
+    <li><a href="account.php"><i class="material-icons">settings</i><?php echo $menutitleparamAccount?></a></li>
+    <li><a href="logout.php"><i class="material-icons">power_settings_new</i><?php echo $menutitleparamLogout?></a></li>
+    <li><a href="delete.php"><i class="material-icons">delete</i><?php echo $menutitleparamDelete?></a></li>
 </ul>
 
 <!--NOTIFICATIONS-->
@@ -156,6 +177,19 @@ if (isset($_SESSION['success'])) {
             $icon = 'fas fa-exclamation-triangle';
             $message = 'Utilisateur deja signalé';
             break;
+        case 13:
+            $icon = 'fas fa-exclamation-triangle';
+            $message = 'Votre fichier doit être une image (JPG, JPEG, PNG & GIF)';
+            break;
+        case 14:
+            $icon = 'fas fa-exclamation-triangle';
+            $message = 'Votre image est trop lourde (>5mb)';
+            break;
+        case 15:
+            $icon = 'fas fa-exclamation-triangle';
+            $message = 'Une erreur est survenue durant l\'upload de votre image, veuillez réessayer plus tard';
+            break;
+
     }
     echo "
     <div class=\"quotes alert_notif\"><a class=\"error\"><i class=\"$icon icon_spacing\"></i>$message</a></div>

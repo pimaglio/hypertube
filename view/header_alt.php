@@ -4,6 +4,21 @@ if (!isset($_SESSION))
     session_start();
 
 include ('../controllers/ProfilsController.php');
+if (!isset($_SESSION['lang']))
+    $_SESSION['lang'] = 'en';
+if (isset($_GET['lang'])){
+    if ($_GET['lang'] === 'fr')
+        $_SESSION['lang'] = 'fr';
+    if ($_GET['lang'] === 'en')
+        $_SESSION['lang'] = 'en';
+}
+
+if (isset($_SESSION['lang'])){
+    if ($_SESSION['lang'] === 'en')
+        include_once '../controllers/en.php';
+    if ($_SESSION['lang'] === 'fr')
+        include_once '../controllers/fr.php';
+}
 
 ?>
 <!DOCTYPE html>
@@ -32,11 +47,12 @@ include ('../controllers/ProfilsController.php');
         <a href="../" class="brand-logo center logo_home"><i class="fas fa-film"></i>Hypertube</a>
         <ul class="right hide-on-med-and-down">
             <?php
-            if (isset($_SESSION['loggued_on_user'])) {
-                echo "
-                <li><a href=\"logout.php\"><i class=\"material-icons\">power_settings_new</i></a></li>
-                ";
-            }
+            $url_fr = $_SERVER['PHP_SELF'] . "?lang=fr";
+            $url_en = $_SERVER['PHP_SELF'] . "?lang=en";
+            echo "
+            <li><a href=\"$url_fr\"><img class=\"flag\" src=\"assets/images/fr.png\"></a></li>
+            <li><a href=\"$url_en\"><img class=\"flag\" src=\"assets/images/en.png\"></a></li>            
+            ";
             ?>
         </ul>
     </div>
