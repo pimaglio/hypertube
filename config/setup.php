@@ -99,6 +99,24 @@ CREATE TABLE if not exists user_db (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_unicode_ci
 EOSQL;
 
+    $sql_create_film_tbl = <<<EOSQL
+CREATE TABLE IF NOT EXISTS film (
+  id int (11) NOT NULL AUTO_INCREMENT,
+  title varchar(255) NOT NULL,
+  title_fr varchar(255) NOT NULL,
+  creation_date varchar(255) NOT NULL,
+  casting varchar(255) NOT NULL,
+  duree varchar(255) NOT NULL,
+  note float NOT NULL,
+  image varchar(255) NOT NULL,
+  description varchar(1000) NOT NULL,
+  description_fr varchar(1000) NOT NULL,
+  torrent varchar(255) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_unicode_ci
+EOSQL;
+
+
     $sql_create_user = <<<EOSQL
 INSERT INTO user_db (login, nom, password, email, valid)
 VALUES 
@@ -112,6 +130,7 @@ EOSQL;
 
         $r = $db->exec($sql_create_user_db_tbl);
         $r = $db->exec($sql_create_user);
+        $r = $db->exec($sql_create_film_tbl);
 
         if ($r !== false) {
             $msg = "Tables are created successfully!." . "<br>";
