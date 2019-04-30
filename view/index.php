@@ -20,7 +20,7 @@ include('header_connect.php');
 
 
 
-    <div class="flexgallery ib-container" id="post-data ib-container">
+    <div class="flexgallery" id="post-data">
         <h1 class="homesuggest"><?php echo $titlesugggestion?></h1>
         <?php
         if (!isset($_GET['last_id']))
