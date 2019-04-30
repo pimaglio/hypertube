@@ -85,6 +85,18 @@ VALUES (:title, :title_fr, :creation, :casting,
         ));
         return $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function return_result($film){
+        $arr = [];
+        $query = 'SELECT * FROM film WHERE INSTR(UPPER(title), UPPER(:film)) OR INSTR(UPPER(title_fr), UPPER(:film))';
+        $stmt = $this->db_con->prepare($query);
+        $stmt->execute(array(
+            ":film" => $film
+        ));
+        while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
+            array_push($arr, $data);
+        return $arr;
+    }
 }
 
 //class IMDB
