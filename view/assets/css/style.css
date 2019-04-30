@@ -48,7 +48,8 @@ a {
 
 body {
     font-family: 'Nunito', sans-serif;
-    background-color: black;
+    background-color: #171717;
+    padding-top: 100px;
 }
 
 * {
@@ -63,6 +64,15 @@ body {
     position: fixed !important;
     width: 100%;
     bottom: -7px;
+}
+
+nav{
+    background-color: black !important;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 50;
+
 }
 
 #background2 {

@@ -14,9 +14,10 @@ foreach ($data as $k => $v){
     $date = substr($v['creation_date'], 0, 4);
     $note = $v['note'];
     $id = $v['id'];
+    $img = $v['image'];
     echo "
         <div class=\"post-id card_movie fade-in two\" id='$id'>
-            <div style=\"background-image: url('http://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg')\" class=\"image_movie\">
+            <div style=\"background-image: url('$img')\" class=\"image_movie\">
                 <div class=\"dejavu\">
                     <span class=\"new badge red\" data-badge-caption=\"Déja visionné\"></span>
                 </div>

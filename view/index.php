@@ -33,9 +33,6 @@ include('header_connect.php');
         include('data.php');
 
         ?>
-        <div class="loader ajax-load text-center" style="display: none">
-            <h5><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading...</h5>
-        </div>
     </div>
 </div>
 
@@ -53,14 +50,9 @@ include('header_connect.php');
             {
                 url: '/view/loadMoreData.php?last_id=' + last_id,
                 type: "get",
-                beforeSend: function()
-                {
-                    $('.ajax-load').show();
-                }
             })
             .done(function(data)
             {
-                $('.ajax-load').hide();
                 $("#post-data").append(data);
             })
             .fail(function(jqXHR, ajaxOptions, thrownError)
