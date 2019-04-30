@@ -57,4 +57,4 @@ $titleresult = 'movie(s) found';
 
 /*HOME SUGGEST*/
 
-$titlesugggestion = 'Most popular movies:';
+$titlesugggestion = 'Most <span style="color: #e50914">popular</span> movies';

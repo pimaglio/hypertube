@@ -11,6 +11,10 @@ foreach ($data as $k => $v){
         $title = $v['title'];
     else
         $title = $v['title_fr'];
+    if ($_SESSION['lang'] === 'en')
+        $des = $v['description'];
+    else
+        $des = $v['description_fr'];
     $date = substr($v['creation_date'], 0, 4);
     $note = $v['note'];
     $id = $v['id'];
@@ -26,7 +30,8 @@ foreach ($data as $k => $v){
                 </div>
             </div>
             <div class=\"card_movie_hover\">
-
+            <p class='synops synops-title'>Synopsis:</p>
+            <p class='synops synopsdes'>$des</p>
             </div>
             <div class=\"card_movie_info\">
                 <p class=\"card_movie_title\">$title</p>

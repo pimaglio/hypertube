@@ -43,7 +43,7 @@ if (isset($_SESSION['lang'])){
 
 <nav class="fade-in one">
     <div class="nav-wrapper">
-        <a href="../" class="brand-logo center logo_home"><i class="fas fa-film"></i>Hypertube</a>
+        <a style="color: #E50812" href="../" class="brand-logo center logo_home"><i class="fas fa-film"></i>Hypertube</a>
         <ul class="right hide-on-med-and-down">
             <?php
             $url_fr = $_SERVER['PHP_SELF'] . "?lang=fr";

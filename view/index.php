@@ -18,11 +18,10 @@ include('header_connect.php');
 
 <div class="">
 
-    <div class="homesuggest">
-        <?php echo $titlesugggestion?>
-    </div>
 
-    <div class="flexgallery" id="post-data">
+
+    <div class="flexgallery ib-container" id="post-data ib-container">
+        <h1 class="homesuggest"><?php echo $titlesugggestion?></h1>
         <?php
         if (!isset($_GET['last_id']))
             $idf = 0;
