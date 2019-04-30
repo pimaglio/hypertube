@@ -105,14 +105,14 @@ EOSQL;
 CREATE TABLE IF NOT EXISTS film (
   id int (11) NOT NULL AUTO_INCREMENT,
   title varchar(255) NOT NULL,
-  title_fr varchar(255) NOT NULL,
+  title_fr varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   creation_date varchar(255) NOT NULL,
   casting varchar(255),
   duree varchar(255) NOT NULL,
   note float NOT NULL,
   image varchar(255) NOT NULL,
   description varchar(5000) NOT NULL,
-  description_fr varchar(5000) NOT NULL,
+  description_fr varchar(5000) COLLATE utf8_unicode_ci NOT NULL,
   genres varchar(255),
   torrent varchar(255) NOT NULL,
   PRIMARY KEY (id)

@@ -33,7 +33,6 @@ if (isset($_POST['research']) && $_POST['research'] == 'ok' && isset($_POST['fil
         $token = new \Tmdb\ApiToken('eec9199c7c3efc546a7b7ea6d86ffcee');
         $client = new \Tmdb\Client($token);
         $detail = $client->getMoviesApi()->getMovie($id);
-        htmldump($detail);
         $detail_fr = $client->getMoviesApi()->getMovie($id, ['language' => 'fr']);
         $credits = $client->getMoviesApi()->getCredits($id);
         $infos = [];
@@ -61,10 +60,10 @@ if (isset($_POST['research']) && $_POST['research'] == 'ok' && isset($_POST['fil
         foreach ($detail['genres'] as $k => $v)
             $infos['genres'] .= $v['name'] . ' ';
         trim($infos['genres']);
-        htmldump($infos);
         if (!$search = $film->find_film($infos['title'], $infos['title_fr'])){
             $new = new Film($infos);
             $new->insert_film();
         }
     }
+    htmldump($res = $film->return_result($_POST['film']));
 }
