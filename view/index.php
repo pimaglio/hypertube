@@ -33,6 +33,9 @@ include('header_connect.php');
 
         ?>
     </div>
+    <div class="ajax-load text-center" style="display:none">
+        <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
+    </div>
 </div>
 
 <script>
@@ -48,17 +51,20 @@ include('header_connect.php');
         $.ajax(
             {
                 url: '/view/loadMoreData.php?last_id=' + last_id,
-                type: "get",
+                type: "GET",
             })
             .done(function(data)
             {
+                
                 $("#post-data").append(data);
             })
+
             .fail(function(jqXHR, ajaxOptions, thrownError)
             {
                 alert('server not responding...');
             });
     }
+
 </script>
 
 <script src="assets/js/materialize.js"></script>

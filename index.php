@@ -42,7 +42,7 @@ if (isset($_SESSION['lang'])){
           integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 </head>
 
-<body>
+<body style="padding-top: 0px">
 
 <div class="home_page row">
     <ul style="display: inline-flex">
