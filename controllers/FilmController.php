@@ -23,13 +23,11 @@ if (isset($_POST['research']) && $_POST['research'] == 'ok' && isset($_POST['fil
         header('Location: ../view/search.php');
         exit ();
     }
-
-//    if (!$search = )
+    $film = new Film([]);
     $title = $_POST['film'];
     $title = str_replace(' ', '+', $title);
     $json = file_get_contents('https://api.themoviedb.org/3/search/movie?api_key=eec9199c7c3efc546a7b7ea6d86ffcee&query=' . $title);
     $arr = json_decode($json, true);
-    htmldump($arr);
     foreach ($arr['results'] as $k => $v) {
         $id = $v['id'];
         $token = new \Tmdb\ApiToken('eec9199c7c3efc546a7b7ea6d86ffcee');
@@ -64,5 +62,9 @@ if (isset($_POST['research']) && $_POST['research'] == 'ok' && isset($_POST['fil
             $infos['genres'] .= $v['name'] . ' ';
         trim($infos['genres']);
         htmldump($infos);
+        if (!$search = $film->find_film($infos['title'], $infos['title_fr'])){
+            $new = new Film($infos);
+            $new->insert_film();
+        }
     }
 }

@@ -75,6 +75,16 @@ VALUES (:title, :title_fr, :creation, :casting,
             array_push($arr, $data);
         return $arr;
     }
+
+    public function find_film($title, $title_fr){
+        $query = 'SELECT id FROM film WHERE title=:title OR title_fr=:title_fr';
+        $stmt = $this->db_con->prepare($query);
+        $stmt->execute(array(
+            ":title" => $title,
+            ":title_fr" => $title_fr
+        ));
+        return $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 
 //class IMDB
