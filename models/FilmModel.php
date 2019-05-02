@@ -97,6 +97,21 @@ VALUES (:title, :title_fr, :creation, :casting,
             array_push($arr, $data);
         return $arr;
     }
+
+    public function recup_gender($genre){
+        $arr = [];
+        $query = 'SELECT * FROM film WHERE INSTR(LOWER(genres), LOWER(:genre))';
+        $stmt = $this->db_con->prepare($query);
+        $stmt->execute(array(
+            ":genre" => $genre
+        ));
+        while ($data = $stmt->fetch(PDO::FETCH_ASSOC)){
+            array_push($arr, $data);
+        }
+        return $arr;
+
+
+    }
 }
 
 //class IMDB

@@ -13,7 +13,17 @@ if (!isset($_SESSION['loggued_on_user']))
 
 include('header_connect.php');
 
-//$res = recup_search($film, $)
+if (isset($_GET['film']) && isset($_GET['datemin']) && isset($_GET['datemax']) && isset($_GET['notemin'])
+&& isset($_GET['notemax']) && isset($_GET['sort'])) {
+    $film = $_GET['film'];
+    $datemin = $_GET['datemin'];
+    $datemax = $_GET['datemax'];
+    $notemin = $_GET['notemin'];
+    $notemax = $_GET['notemax'];
+    $sort = $_GET['sort'];
+    $res = recup_search($film, $datemin, $datemax, $notemin, $notemax, $sort);
+    htmldump($res);
+}
 ?>
 
 <body>
