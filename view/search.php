@@ -18,33 +18,37 @@ include('header_connect.php');
 
 <div class="container">
     <div class="search_container row">
-        <form method="get" action="search.php">
-
+        <form method="POST" action="../controllers/FilmController.php">
+            <div class="input-field col s12">
+                <p class="fw100"><i class="fas fa-film icon_spacing2"></i><?php echo $titlemovie ?></p>
+                <input id="nom" type="text" class="validate" pattern="[A-Za-z\séèâêëçû -]+" name="nom">
+                <span class=\"helper-text\" data-error=\"fewfefewf\" data-success=\"$formnameSuccess\"></span>
+            </div>
             <div class="col s3">
                 <p class="fw100"><i class="fas fa-sort-numeric-down icon_spacing2"></i><?php echo $rangedatemin ?></p>
                 <p class="range-field">
-                    <input name="agemin" type="range" id="test5" value="2000" min="1940" max="2019"/>
+                    <input name="datemin" type="range" id="datemin" value="2000" min="1940" max="2019"/>
                 </p>
             </div>
 
             <div class="col s3">
                 <p class="fw100"><i class="fas fa-sort-numeric-up icon_spacing2"></i><?php echo $rangedatemax ?></p>
                 <p class="range-field">
-                    <input name="agemax" type="range" id="test5" value="2019" min="1940" max="2019"/>
+                    <input name="datemax" type="range" id="datemax" value="2019" min="1940" max="2019"/>
                 </p>
             </div>
 
             <div class="col s3">
                 <p class="fw100"><i class="fas fa-sort-amount-up icon_spacing2"></i><?php echo $scoremin ?></p>
                 <p class="range-field">
-                    <input name="popmin" type="range" id="test5" value="2" min="0" max="10"/>
+                    <input name="notemin" type="range" id="test5" value="2" min="0" max="10"/>
                 </p>
             </div>
 
             <div class="col s3">
                 <p class="fw100"><i class="fas fa-street-view icon_spacing2"></i><?php echo $scoremax ?></p>
                 <p class="range-field">
-                    <input name="distmax" type="range" id="test5" value="8" min="0" max="10"/>
+                    <input name="notemax" type="range" id="test5" value="8" min="0" max="10"/>
                 </p>
             </div>
 
@@ -79,7 +83,7 @@ include('header_connect.php');
                     <div class=\"col s3\">
                         <p>
                             <label>
-                                <input name=\"sort\" value=\"101\" class=\"with-gap pulse\" name=\"notri\" type=\"radio\" checked/>
+                                <input value=\"101\" class=\"with-gap pulse\" name=\"nosort\" type=\"radio\" checked/>
                                 <span>$trino</span>
                             </label>
                         </p>
@@ -87,7 +91,7 @@ include('header_connect.php');
                     <div class=\"col s3\">
                         <p>
                             <label>
-                                <input name=\"sort\" value=\"101\" class=\"with-gap pulse\" name=\"rating\" type=\"radio\"/>
+                                <input value=\"101\" class=\"with-gap pulse\" name=\"ratingsort\" type=\"radio\"/>
                                 <span>$trinote</span>
                             </label>
                         </p>
@@ -95,14 +99,15 @@ include('header_connect.php');
                     <div class=\"col s3\">
                         <p>
                             <label>
-                                <input name=\"sort\" value=\"101\" class=\"with-gap pulse\" name=\"recent\" type=\"radio\"/>
+                                <input value=\"101\" class=\"with-gap pulse\" name=\"recentsort\" type=\"radio\"/>
                                 <span>$trirecent</span>
                             </label>
                         </p>
                     </div>
                 </div>
+                <input type='hidden' name='search' value='ok'>
                 <div >
-                    <button class=\" btn_search btn-large waves-effect waves-light pink accent-3 fade-in two\">Rechercher
+                    <button class=\" btn_search btn-large waves-effect waves-light pink accent-3 fade-in two\">$srcbtn
                         <i style=\"position: absolute\" class=\"fab fa-searchengin icon_spacing3\"></i>
                     </button>
                 </div>

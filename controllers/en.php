@@ -88,3 +88,5 @@ $genreTvMovie = 'TV Movie';
 $genreThriller = 'Thriller';
 $genreWar = 'War';
 $genreWestern = 'Western';
+$srcbtn = 'Search';
+$titlemovie = 'Movie title';
