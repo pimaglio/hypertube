@@ -12,16 +12,18 @@ if (!isset($_SESSION['loggued_on_user']))
     header("Location: ../index.php");
 
 include('header_connect.php');
+
+//$res = recup_search($film, $)
 ?>
 
 <body>
 
 <div class="container">
     <div class="search_container row">
-        <form method="POST" action="../controllers/FilmController.php">
+        <form method="GET" action="./search.php">
             <div class="input-field col s12">
                 <p class="fw100"><i class="fas fa-film icon_spacing2"></i><?php echo $titlemovie ?></p>
-                <input id="film" type="text" class="validate" pattern="[A-Za-z\séèâêëçû -]+" name="nom">
+                <input id="film" type="text" class="validate" pattern="[A-Za-z\séèâêëçû -]+" name="film">
                 <span class=\"helper-text\" data-error=\"fewfefewf\" data-success=\"$formnameSuccess\"></span>
             </div>
             <div class="col s3">
@@ -105,7 +107,6 @@ include('header_connect.php');
                         </p>
                     </div>
                 </div>
-                <input type='hidden' name='search' value='ok'>
                 <div >
                     <button class=\" btn_search btn-large waves-effect waves-light pink accent-3 fade-in two\">$srcbtn
                         <i style=\"position: absolute\" class=\"fab fa-searchengin icon_spacing3\"></i>
