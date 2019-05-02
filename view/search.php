@@ -21,155 +21,109 @@ include('header_connect.php');
         <form method="get" action="search.php">
 
             <div class="col s3">
-                <p class="fw100"><i class="fas fa-sort-numeric-down icon_spacing2"></i>Âge minimum</p>
+                <p class="fw100"><i class="fas fa-sort-numeric-down icon_spacing2"></i><?php echo $rangedatemin ?></p>
                 <p class="range-field">
-                    <input name="agemin" type="range" id="test5" value="30" min="18" max="116"/>
+                    <input name="agemin" type="range" id="test5" value="2000" min="1940" max="2019"/>
                 </p>
             </div>
 
             <div class="col s3">
-                <p class="fw100"><i class="fas fa-sort-numeric-up icon_spacing2"></i>Âge maximum</p>
+                <p class="fw100"><i class="fas fa-sort-numeric-up icon_spacing2"></i><?php echo $rangedatemax ?></p>
                 <p class="range-field">
-                    <input name="agemax" type="range" id="test5" value="77" min="18" max="116"/>
+                    <input name="agemax" type="range" id="test5" value="2019" min="1940" max="2019"/>
                 </p>
             </div>
 
             <div class="col s3">
-                <p class="fw100"><i class="fas fa-sort-amount-up icon_spacing2"></i>Popularité minimum</p>
+                <p class="fw100"><i class="fas fa-sort-amount-up icon_spacing2"></i><?php echo $scoremin ?></p>
                 <p class="range-field">
-                    <input name="popmin" type="range" id="test5" min="0" max="10000"/>
+                    <input name="popmin" type="range" id="test5" value="2" min="0" max="10"/>
                 </p>
             </div>
 
             <div class="col s3">
-                <p class="fw100"><i class="fas fa-street-view icon_spacing2"></i>Distance maximum (km)</p>
+                <p class="fw100"><i class="fas fa-street-view icon_spacing2"></i><?php echo $scoremax ?></p>
                 <p class="range-field">
-                    <input name="distmax" type="range" id="test5" min="0" max="1000"/>
+                    <input name="distmax" type="range" id="test5" value="8" min="0" max="10"/>
                 </p>
             </div>
 
-            <div style="position: relative" class="col s12">
-                <p class="fw100"><i class="fas fa-sort-amount-up icon_spacing2"></i>Centre(s) d'intérêt(s)</p>
-                <div class="row">
-                    <p class="col s4">
-                        <label>
-                            <input type="checkbox" name="sport" value="101"/>
-                            <span>Sport</span>
-                        </label>
-                    </p>
-                    <p class="col s4">
-                        <label>
-                            <input type="checkbox" name="voyage" value="101"/>
-                            <span>Voyage</span>
-                        </label>
-                    </p>
-                    <p class="col s4">
-                        <label>
-                            <input type="checkbox" name="vegan" value="101"/>
-                            <span>Vegan</span>
-                        </label>
-                    </p>
-                    <p class="col s4">
-                        <label>
-                            <input type="checkbox" name="geek" value="101"/>
-                            <span>Geek</span>
-                        </label>
-                    </p>
-                    <p class="col s4">
-                        <label>
-                            <input type="checkbox" name="soiree" value="101"/>
-                            <span>Soiree</span>
-                        </label>
-                    </p>
-                    <p class="col s4">
-                        <label>
-                            <input type="checkbox" name="tattoo" value="101"/>
-                            <span>Tattoo</span>
-                        </label>
-                    </p>
-                    <p class="col s4">
-                        <label>
-                            <input type="checkbox" name="musique" value="101"/>
-                            <span>Musique</span>
-                        </label>
-                    </p>
-                    <p class="col s4">
-                        <label>
-                            <input type="checkbox" name="lecture" value="101"/>
-                            <span>Lecture</span>
-                        </label>
-                    </p>
-                    <p class="col s4">
-                        <label>
-                            <input type="checkbox" name="theatre" value="101"/>
-                            <span>Théâtre</span>
-                        </label>
-                    </p>
-                    <p class="col s4">
-                        <label>
-                            <input type="checkbox" name="religion" value="101"/>
-                            <span>Religion</span>
-                        </label>
-                    </p>
-                </div>
-                <div class="row">
-                    <div class="col s3">
+            <?php
+            echo "
+            <div class=\"input-field col s12\">
+            <p class=\"fw100\"><i class=\"fas fa-sort-amount-up icon_spacing2\"></i>Genre(s)</p>
+                <select>
+                    <option value=\"\" disabled selected>$titleselect</option>
+                    <option value='3' name='action'>$genreAction</option>
+                    <option value='3' name='adventure'>$genreAdventure</option>
+                    <option value='3' name='animation'>$genreAnimation</option>
+                    <option value='3' name='comedy'>$genreComedy</option>
+                    <option value='3' name='crime'>$genreCrime</option>
+                    <option value='3' name='documentary'>$genreDocumentary</option>
+                    <option value='3' name='drama'>$genreDrama</option>
+                    <option value='3' name='family'>$genreFamily</option>
+                    <option value='3' name='fantasy'>$genreFantasy</option>
+                    <option value='3' name='history'>$genreHistory</option>
+                    <option value='3' name='horror'>$genreHorror</option>
+                    <option value='3' name='music'>$genreMusic</option>
+                    <option value='3' name='mystery'>$genreMystery</option>
+                    <option value='3' name='romance'>$genreRomance</option>
+                    <option value='3' name='science fiction'>$genreSciencefi</option>
+                    <option value='3' name='tv movie'>$genreTvMovie</option>
+                    <option value='3' name='thriller'>$genreThriller</option>
+                    <option value='3' name='war'>$genreWar</option>
+                    <option value='3' name='western'>$genreWestern</option>
+                </select>
+            </div>
+                <div class=\"row\">
+                    <div class=\"col s3\">
                         <p>
                             <label>
-                                <input name="sort" value="0" class="with-gap pulse" name="group1" type="radio" checked/>
-                                <span>Ne pas trier</span>
+                                <input name=\"sort\" value=\"101\" class=\"with-gap pulse\" name=\"notri\" type=\"radio\" checked/>
+                                <span>$trino</span>
                             </label>
                         </p>
                     </div>
-                    <div class="col s3">
+                    <div class=\"col s3\">
                         <p>
                             <label>
-                                <input name="sort" value="1" class="with-gap pulse" name="group1" type="radio"/>
-                                <span>Trier par âge croissant</span>
+                                <input name=\"sort\" value=\"101\" class=\"with-gap pulse\" name=\"rating\" type=\"radio\"/>
+                                <span>$trinote</span>
                             </label>
                         </p>
                     </div>
-                    <div class="col s3">
+                    <div class=\"col s3\">
                         <p>
                             <label>
-                                <input name="sort" value="2" class="with-gap pulse" name="group1" type="radio"/>
-                                <span>Trier par âge décroissant</span>
-                            </label>
-                        </p>
-                    </div>
-                    <div class="col s3">
-                        <p>
-                            <label>
-                                <input name="sort" value="3" class="with-gap pulse" name="group1" type="radio"/>
-                                <span>Trier par popularité croissante</span>
-                            </label>
-                        </p>
-                    </div>
-                    <div class="col s3">
-                        <p>
-                            <label>
-                                <input name="sort" value="4" class="with-gap pulse" name="group1" type="radio"/>
-                                <span>Trier par popularité décroissante</span>
+                                <input name=\"sort\" value=\"101\" class=\"with-gap pulse\" name=\"recent\" type=\"radio\"/>
+                                <span>$trirecent</span>
                             </label>
                         </p>
                     </div>
                 </div>
                 <div >
-                    <button class=" btn_search btn-large waves-effect waves-light pink accent-3 fade-in two">Rechercher
-                        <i style="position: absolute" class="fab fa-searchengin icon_spacing3"></i>
+                    <button class=\" btn_search btn-large waves-effect waves-light pink accent-3 fade-in two\">Rechercher
+                        <i style=\"position: absolute\" class=\"fab fa-searchengin icon_spacing3\"></i>
                     </button>
                 </div>
             </div>
+            ";
+
+            ?>
+
         </form>
     </div>
 
-    <div class="homesuggest">
-        <?php echo $titleresult?>
+    <div class="homesuggest center">
+        <h6><?php echo $titleresult?></h6>
     </div>
 
 </div>
 
 <script>
+    $(document).ready(function(){
+        $('select').formSelect();
+    });
 
 </script>
 

@@ -59,3 +59,33 @@ $titleresult = 'film(s) trouvé(s)';
 
 $titlesugggestion = 'Les films les plus <span style="color: #e50914">populaires</span>';
 
+/*SEARCH*/
+
+$rangedatemin = 'Date de sortie (min)';
+$rangedatemax = 'Date de sortie (max)';
+$titleselect = 'Sélectionner le genre';
+$trino = 'Ne pas trier';
+$trinote = 'Les mieux notés';
+$trirecent = 'Les plus récents';
+$scoremin = 'Note (min)';
+$scoremax = 'Note (max)';
+$genreAction = 'Action';
+$genreAdventure = 'Adventure';
+$genreAnimation = 'Animation';
+$genreComedy = 'Comedy';
+$genreCrime = 'Crime';
+$genreDocumentary = 'Documentary';
+$genreDrama = 'Drama';
+$genreFamily = 'Family';
+$genreFantasy = 'Fantasy';
+$genreHistory = 'History';
+$genreHorror = 'Horror';
+$genreMusic = 'Music';
+$genreMystery = 'Mystery';
+$genreRomance = 'Romance';
+$genreSciencefi = 'Science Fiction';
+$genreTvMovie = 'TV Movie';
+$genreThriller = 'Thriller';
+$genreWar = 'War';
+$genreWestern = 'Western';
+

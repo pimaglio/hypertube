@@ -50,6 +50,7 @@ body {
     font-family: 'Nunito', sans-serif;
     background-color: #171717;
     padding-top: 100px;
+    scrollbar-width: none;
 }
 
 * {
@@ -57,6 +58,12 @@ body {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+@-moz-document url-prefix() {
+    html,body{overflow: hidden !important;}
+}
+
+html {overflow: -moz-scrollbars-none;}
 
 /* Header */
 
@@ -1424,6 +1431,7 @@ input#imagep4:hover {
     height: 100%;
     transition: all .3s;
     animation: fadeIn 1s;
+    overflow: auto;
 }
 .card_movie_hover:hover{
     background-color: #000000d9;
@@ -1436,12 +1444,16 @@ input#imagep4:hover {
     transition: all .3s;
     animation: fadeIn 1s;
     cursor: pointer;
-    overflow: scroll;
+    overflow: auto;
     padding-top: 80px;
     padding-left: 10px;
     padding-right: 10px;
     border: 1px solid #d32f2f38;
     box-shadow: 0 0 16px 0px rgba(0, 0, 0, 0.87);
+}
+
+#scroll-over {
+    overflow: hidden;
 }
 
 .dejavu{

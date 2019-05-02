@@ -6,7 +6,7 @@
  * Time: 00:19
  */
 
-foreach ($data as $k => $v){
+foreach ($data as $k => $v) {
     if ($_SESSION['lang'] === 'en')
         $title = $v['title'];
     else
@@ -29,9 +29,13 @@ foreach ($data as $k => $v){
 
                 </div>
             </div>
+            <div id='scroll-over'>
             <div class=\"card_movie_hover\">
-            <p class='synops synops-title'>Synopsis:</p>
-            <p class='synops synopsdes'>$des</p>
+                <div id='scroll-over'>
+                    <p class='synops synops-title'>Synopsis:</p>
+                    <p class='synops synopsdes'>$des</p>
+                </div>
+            </div>
             </div>
             <div class=\"card_movie_info\">
                 <p class=\"card_movie_title\">$title</p>
