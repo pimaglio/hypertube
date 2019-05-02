@@ -2,15 +2,15 @@
 session_start();
 if (isset($_SESSION['loggued_on_user']))
     header("Location: index.php");
-require('../controllers/OAuth2/src/OAuth2/Client.php');
-require('../controllers/OAuth2/src/OAuth2/GrantType/IGrantType.php');
-require('../controllers/OAuth2/src/OAuth2/GrantType/AuthorizationCode.php');
-require('../controllers/ProfilsController.php');
+require('OAuth2/src/OAuth2/Client.php');
+require('OAuth2/src/OAuth2/GrantType/IGrantType.php');
+require('OAuth2/src/OAuth2/GrantType/AuthorizationCode.php');
+require('ProfilsController.php');
 
 const CLIENT_ID = '18b0ad5f0844e0696964e07844f47c01f570a8803c0664b25bcc6348fecb9cbb';
 const CLIENT_SECRET = 'e24ca4403739db8cc3d4c2add966b6d14bf4173b29c9c48819c605745f2722e3';
 
-const REDIRECT_URI = 'http://localhost:8008/view/42auth.php';
+const REDIRECT_URI = 'http://localhost:8008/controllers/42auth.php';
 const AUTHORIZATION_ENDPOINT = 'https://api.intra.42.fr/oauth/authorize';
 const TOKEN_ENDPOINT = 'https://api.intra.42.fr/oauth/token';
 
@@ -46,7 +46,7 @@ if (!isset($_GET['code'])) {
                     break;
             }
         }
-        header('Location: register.php?' . $nom . "&" . $login . "&" . $email . "&" . $pic);
+        header('Location: ../view/register.php?' . $nom . "&" . $login . "&" . $email . "&" . $pic);
         die('Redirect');
     } else {
         $_SESSION['error'] = 10;

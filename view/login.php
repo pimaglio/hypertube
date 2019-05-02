@@ -40,7 +40,7 @@ if (isset($_SESSION['lang'])) {
                 <a href="../controllers/googleauth.php"><img class="auth_logo" src="assets/images/google.png"></a>
             </div>
             <div style="margin-top: 15px; margin-bottom: 15px" class="col s6 center">
-                <a href="42auth.php"><img class="auth_logo" src="assets/images/42_Logo.svg"></a>
+                <a href="../controllers/42auth.php"><img class="auth_logo" src="assets/images/42_Logo.svg"></a>
             </div>
             <p class='title_login1'><?php echo $title_basiclog ?></p>
             <div class="input-field col s12">

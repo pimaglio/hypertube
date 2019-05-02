@@ -7,7 +7,6 @@
  */
 include('../models/UsersModel.php');
 include('../models/LocationModel.php');
-require_once "PopulariteController.php";
 
 if (!isset($_SESSION)) {
     session_start();
