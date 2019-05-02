@@ -20,7 +20,11 @@ foreach ($data as $k => $v) {
     $id = $v['id'];
     $img = $v['image'];
     $title_alt = $title;
-    $title = substr($title, 0, 30) . '...';
+    $count = strlen($title);
+    if ($count > 28)
+        $title = substr($title, 0, 28) . '...';
+
+
     echo "
         <div class=\"post-id card_movie fade-in two\" id='$id'>
             <div style=\"background-image: url('$img')\" class=\"image_movie\">
@@ -40,7 +44,7 @@ foreach ($data as $k => $v) {
             </div>
             </div>
             <div class=\"card_movie_info\">
-                <p class=\"card_movie_title\">$title</p>
+                <p data-position=\"top\" data-tooltip=\"$title_alt\" class=\"card_movie_title tooltipped\">$title</p>
                 <div>
                     <p class=\"card_movie_year\"><i style=\"color: #b71c1c\" class=\"material-icons left\">movie</i>$date</p>
                     <p class=\"rate\"><i style=\"color: #ffab00\" class=\"material-icons left\">stars</i>$note / 10</p>
@@ -49,3 +53,9 @@ foreach ($data as $k => $v) {
         </div>
         ";
 }
+?>
+<script>
+    $(document).ready(function(){
+        $('.tooltipped').tooltip();
+    });
+</script>

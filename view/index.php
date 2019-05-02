@@ -65,6 +65,10 @@ include('header_connect.php');
             });
     }
 
+    $(document).ready(function(){
+        $('.tooltipped').tooltip();
+    });
+
 </script>
 
 <script src="assets/js/materialize.js"></script>
