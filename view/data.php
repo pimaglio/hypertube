@@ -19,6 +19,8 @@ foreach ($data as $k => $v) {
     $note = $v['note'];
     $id = $v['id'];
     $img = $v['image'];
+    $title_alt = $title;
+    $title = substr($title, 0, 30) . '...';
     echo "
         <div class=\"post-id card_movie fade-in two\" id='$id'>
             <div style=\"background-image: url('$img')\" class=\"image_movie\">

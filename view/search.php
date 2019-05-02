@@ -58,27 +58,27 @@ include('header_connect.php');
             echo "
             <div class=\"input-field col s12\">
             <p class=\"fw100\"><i class=\"fas fa-tape icon_spacing2\"></i>Genre(s)</p>
-                <select>
-                    <option value=\"\" disabled selected>$titleselect</option>
-                    <option value='3' name='action'>$genreAction</option>
-                    <option value='3' name='adventure'>$genreAdventure</option>
-                    <option value='3' name='animation'>$genreAnimation</option>
-                    <option value='3' name='comedy'>$genreComedy</option>
-                    <option value='3' name='crime'>$genreCrime</option>
-                    <option value='3' name='documentary'>$genreDocumentary</option>
-                    <option value='3' name='drama'>$genreDrama</option>
-                    <option value='3' name='family'>$genreFamily</option>
-                    <option value='3' name='fantasy'>$genreFantasy</option>
-                    <option value='3' name='history'>$genreHistory</option>
-                    <option value='3' name='horror'>$genreHorror</option>
-                    <option value='3' name='music'>$genreMusic</option>
-                    <option value='3' name='mystery'>$genreMystery</option>
-                    <option value='3' name='romance'>$genreRomance</option>
-                    <option value='3' name='science fiction'>$genreSciencefi</option>
-                    <option value='3' name='tv movie'>$genreTvMovie</option>
-                    <option value='3' name='thriller'>$genreThriller</option>
-                    <option value='3' name='war'>$genreWar</option>
-                    <option value='3' name='western'>$genreWestern</option>
+                <select name='genre'>
+                    <option value='' disabled selected>$titleselect</option>
+                    <option value='action'>$genreAction</option>
+                    <option value='adventure'>$genreAdventure</option>
+                    <option value='animation'>$genreAnimation</option>
+                    <option value='comedy'>$genreComedy</option>
+                    <option value='crime'>$genreCrime</option>
+                    <option value='documentary'>$genreDocumentary</option>
+                    <option value='drama'>$genreDrama</option>
+                    <option value='family'>$genreFamily</option>
+                    <option value='fantasy'>$genreFantasy</option>
+                    <option value='history'>$genreHistory</option>
+                    <option value='horror'>$genreHorror</option>
+                    <option value='music'>$genreMusic</option>
+                    <option value='mystery'>$genreMystery</option>
+                    <option value='romance'>$genreRomance</option>
+                    <option value='science fiction'>$genreSciencefi</option>
+                    <option value='tv movie'>$genreTvMovie</option>
+                    <option value='thriller'>$genreThriller</option>
+                    <option value='war'>$genreWar</option>
+                    <option value='western'>$genreWestern</option>
                 </select>
             </div>
                 <div class=\"row\">
