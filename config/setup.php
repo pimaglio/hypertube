@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS film (
   id int (11) NOT NULL AUTO_INCREMENT,
   title varchar(255) NOT NULL,
   title_fr varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  creation_date varchar(255) NOT NULL,
+  creation_date int(11) NOT NULL,
   casting varchar(255),
   duree varchar(255) NOT NULL,
   note float NOT NULL,
@@ -180,7 +180,9 @@ EOSQL;
                     $infos['title_fr'] = $movie_fr[$k][$k1]['title'];
                     $infos['overview'] = $detail['overview'];
                     $infos['overview_fr'] = $movie_fr[$k][$k1]['overview'];
-                    $infos['date'] = $detail['release_date'];
+//                    $infos['date'] = $detail['release_date'];
+                    if (!empty($detail['release_date']))
+                        $infos['date'] = explode('-', $detail['release_date'])[0];
                     $infos['note'] = $detail['vote_average'];
                     $infos['time'] = $detail['runtime'] . 'min';
                     $infos['cast'] = NULL;

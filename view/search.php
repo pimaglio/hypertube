@@ -13,7 +13,7 @@ if (!isset($_SESSION['loggued_on_user']))
 
 include('header_connect.php');
 
-if (isset($_GET['film']) && isset($_GET['datemin']) && isset($_GET['datemax']) && isset($_GET['notemin'])
+if (isset($_GET['film']) && !empty($_GET['film']) && isset($_GET['datemin']) && isset($_GET['datemax']) && isset($_GET['notemin'])
 && isset($_GET['notemax']) && isset($_GET['sort'])) {
     $film = $_GET['film'];
     $datemin = $_GET['datemin'];
@@ -22,6 +22,18 @@ if (isset($_GET['film']) && isset($_GET['datemin']) && isset($_GET['datemax']) &
     $notemax = $_GET['notemax'];
     $sort = $_GET['sort'];
     $res = recup_search($film, $datemin, $datemax, $notemin, $notemax, $sort);
+    htmldump($res);
+}
+
+if (isset($_GET['film']) && empty($_GET['film']) && isset($_GET['datemin']) && isset($_GET['datemax']) && isset($_GET['notemin'])
+&& isset($_GET['notemax']) && isset($_GET['sort']) && isset($_GET['genre'])){
+    $datemin = $_GET['datemin'];
+    $datemax = $_GET['datemax'];
+    $notemin = $_GET['notemin'];
+    $notemax = $_GET['notemax'];
+    $sort = $_GET['sort'];
+    $genre = $_GET['genre'];
+    $res = recup_genre($genre, $datemin, $datemax, $notemin, $notemax, $sort);
     htmldump($res);
 }
 ?>
@@ -39,7 +51,7 @@ if (isset($_GET['film']) && isset($_GET['datemin']) && isset($_GET['datemax']) &
             <div class="col s3">
                 <p class="fw100"><i class="fas fa-calendar-minus icon_spacing2"></i><?php echo $rangedatemin ?></p>
                 <p class="range-field">
-                    <input name="datemin" type="range" id="datemin" value="2000" min="1940" max="2019"/>
+                    <input name="datemin" type="range" id="datemin" value="1940" min="1940" max="2019"/>
                 </p>
             </div>
 
@@ -53,14 +65,14 @@ if (isset($_GET['film']) && isset($_GET['datemin']) && isset($_GET['datemax']) &
             <div class="col s3">
                 <p class="fw100"><i class="fas fa-sort-amount-down icon_spacing2"></i><?php echo $scoremin ?></p>
                 <p class="range-field">
-                    <input name="notemin" type="range" id="test5" value="2" min="0" max="10"/>
+                    <input name="notemin" type="range" id="test5" value="0" min="0" max="10"/>
                 </p>
             </div>
 
             <div class="col s3">
                 <p class="fw100"><i class="fas fa-sort-amount-up icon_spacing2"></i><?php echo $scoremax ?></p>
                 <p class="range-field">
-                    <input name="notemax" type="range" id="test5" value="8" min="0" max="10"/>
+                    <input name="notemax" type="range" id="test5" value="10" min="0" max="10"/>
                 </p>
             </div>
 

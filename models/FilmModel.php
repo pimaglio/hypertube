@@ -46,7 +46,8 @@ class Film
         $this->db_con = database_connect();
     }
 
-    public function insert_film(){
+    public function insert_film()
+    {
         $query = 'INSERT INTO film (title, title_fr, creation_date,
  casting, duree, note, image, description, description_fr, genres)
 VALUES (:title, :title_fr, :creation, :casting, 
@@ -66,9 +67,10 @@ VALUES (:title, :title_fr, :creation, :casting,
         ));
     }
 
-    public function recup_film($idf){
+    public function recup_film($idf)
+    {
         $arr = [];
-        $query = 'SELECT * FROM film WHERE id > '."$idf".' LIMIT 20';
+        $query = 'SELECT * FROM film WHERE id > ' . "$idf" . ' LIMIT 20';
         $stmt = $this->db_con->prepare($query);
         $stmt->execute();
         while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
@@ -76,7 +78,8 @@ VALUES (:title, :title_fr, :creation, :casting,
         return $arr;
     }
 
-    public function find_film($title, $title_fr){
+    public function find_film($title, $title_fr)
+    {
         $query = 'SELECT id FROM film WHERE title=:title OR title_fr=:title_fr';
         $stmt = $this->db_con->prepare($query);
         $stmt->execute(array(
@@ -86,31 +89,67 @@ VALUES (:title, :title_fr, :creation, :casting,
         return $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function return_result($film){
+    public function return_result($film, $datemin, $datemax, $notemin, $notemax, $sort)
+    {
         $arr = [];
-        $query = 'SELECT * FROM film WHERE INSTR(UPPER(title), UPPER(:film)) OR INSTR(UPPER(title_fr), UPPER(:film))';
-        $stmt = $this->db_con->prepare($query);
-        $stmt->execute(array(
-            ":film" => $film
-        ));
+        if ($sort == 'sortrecent') {
+            $query = 'SELECT * FROM film WHERE (INSTR(UPPER(title), UPPER(:film)) OR INSTR(UPPER(title_fr), UPPER(:film))) AND (creation_date BETWEEN :datemin AND :datemax) AND 
+                         (note BETWEEN :notemin AND :notemax) ORDER BY creation_date DESC';
+            $stmt = $this->db_con->prepare($query);
+            $stmt->execute(array(
+                ":film" => $film,
+                ":datemin" => $datemin,
+                ":datemax" => $datemax,
+                ":notemin" => $notemin,
+                ":notemax" => $notemax
+            ));
+        } else {
+            $query = 'SELECT * FROM film WHERE (INSTR(UPPER(title), UPPER(:film)) OR INSTR(UPPER(title_fr), UPPER(:film))) AND (creation_date BETWEEN :datemin AND :datemax) AND 
+                         (note BETWEEN :notemin AND :notemax)';
+            $stmt = $this->db_con->prepare($query);
+            $stmt->execute(array(
+                ":film" => $film,
+                ":datemin" => $datemin,
+                ":datemax" => $datemax,
+                ":notemin" => $notemin,
+                ":notemax" => $notemax
+            ));
+        }
         while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
             array_push($arr, $data);
         return $arr;
     }
 
-    public function recup_gender($genre){
+    public function recup_genre($genre, $datemin, $datemax, $notemin, $notemax, $sort)
+    {
         $arr = [];
-        $query = 'SELECT * FROM film WHERE INSTR(LOWER(genres), LOWER(:genre))';
-        $stmt = $this->db_con->prepare($query);
-        $stmt->execute(array(
-            ":genre" => $genre
-        ));
-        while ($data = $stmt->fetch(PDO::FETCH_ASSOC)){
+        if ($sort == 'sortrecent') {
+            $query = 'SELECT * FROM film WHERE INSTR(UPPER(genres), UPPER(:genre)) AND creation_date BETWEEN :datemin AND :datemax AND 
+                         note BETWEEN :notemin AND :notemax ORDER BY creation_date DESC';
+            $stmt = $this->db_con->prepare($query);
+            $stmt->execute(array(
+                ":genre" => $genre,
+                ":datemin" => $datemin,
+                ":datemax" => $datemax,
+                ":notemin" => $notemin,
+                ":notemax" => $notemax,
+            ));
+        } else {
+            $query = 'SELECT * FROM film WHERE INSTR(UPPER(genres), UPPER(:genre)) AND creation_date BETWEEN :datemin AND :datemax AND 
+                         note BETWEEN :notemin AND :notemax';
+            $stmt = $this->db_con->prepare($query);
+            $stmt->execute(array(
+                ":genre" => $genre,
+                ":datemin" => $datemin,
+                ":datemax" => $datemax,
+                ":notemin" => $notemin,
+                ":notemax" => $notemax
+            ));
+        }
+        while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
             array_push($arr, $data);
         }
         return $arr;
-
-
     }
 }
 
