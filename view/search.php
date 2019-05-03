@@ -139,7 +139,7 @@ include('header_connect.php');
         $data = recup_search($film, $datemin, $datemax, $notemin, $notemax, $sort);
         $_SESSION['search'] = $data;
         $count = count($_SESSION['search']);
-        echo "<h5 class=\"homesuggest center\">$count $titleresult</h5>";
+        echo "<h6 class=\"homesuggest center\">$count $titleresult</h6>";
         include('DataSearch.php');
     }
 
@@ -159,7 +159,7 @@ include('header_connect.php');
         $data = recup_genre($genre, $datemin, $datemax, $notemin, $notemax, $sort);
         $_SESSION['search'] = $data;
         $count = count($_SESSION['search']);
-        echo "<h5 class=\"homesuggest center\"> $count $titleresult</h5>";
+        echo "<h6 class=\"homesuggest center\"> $count $titleresult</h6>";
         include('DataSearch.php');
     }
 
