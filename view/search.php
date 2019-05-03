@@ -13,71 +13,47 @@ if (!isset($_SESSION['loggued_on_user']))
 
 include('header_connect.php');
 
-if (isset($_GET['film']) && !empty($_GET['film']) && isset($_GET['datemin']) && isset($_GET['datemax']) && isset($_GET['notemin'])
-&& isset($_GET['notemax']) && isset($_GET['sort'])) {
-    $film = $_GET['film'];
-    $datemin = $_GET['datemin'];
-    $datemax = $_GET['datemax'];
-    $notemin = $_GET['notemin'];
-    $notemax = $_GET['notemax'];
-    $sort = $_GET['sort'];
-    $res = recup_search($film, $datemin, $datemax, $notemin, $notemax, $sort);
-    htmldump($res);
-}
 
-if (isset($_GET['film']) && empty($_GET['film']) && isset($_GET['datemin']) && isset($_GET['datemax']) && isset($_GET['notemin'])
-&& isset($_GET['notemax']) && isset($_GET['sort']) && isset($_GET['genre'])){
-    $datemin = $_GET['datemin'];
-    $datemax = $_GET['datemax'];
-    $notemin = $_GET['notemin'];
-    $notemax = $_GET['notemax'];
-    $sort = $_GET['sort'];
-    $genre = $_GET['genre'];
-    $res = recup_genre($genre, $datemin, $datemax, $notemin, $notemax, $sort);
-    htmldump($res);
-}
 ?>
 
-<body>
+    <div class="container">
+        <div class="search_container row">
+            <form method="GET" action="./search.php">
+                <div class="input-field col s12">
+                    <p class="fw100"><i class="fas fa-film icon_spacing2"></i><?php echo $titlemovie ?></p>
+                    <input id="film" type="text" class="validate" pattern="[A-Za-z\séèâêëçû -]+" name="film">
+                    <span class=\"helper-text\" data-error=\"fewfefewf\" data-success=\"$formnameSuccess\"></span>
+                </div>
+                <div class="col s3">
+                    <p class="fw100"><i class="fas fa-calendar-minus icon_spacing2"></i><?php echo $rangedatemin ?></p>
+                    <p class="range-field">
+                        <input name="datemin" type="range" id="datemin" value="1940" min="1940" max="2019"/>
+                    </p>
+                </div>
 
-<div class="container">
-    <div class="search_container row">
-        <form method="GET" action="./search.php">
-            <div class="input-field col s12">
-                <p class="fw100"><i class="fas fa-film icon_spacing2"></i><?php echo $titlemovie ?></p>
-                <input id="film" type="text" class="validate" pattern="[A-Za-z\séèâêëçû -]+" name="film">
-                <span class=\"helper-text\" data-error=\"fewfefewf\" data-success=\"$formnameSuccess\"></span>
-            </div>
-            <div class="col s3">
-                <p class="fw100"><i class="fas fa-calendar-minus icon_spacing2"></i><?php echo $rangedatemin ?></p>
-                <p class="range-field">
-                    <input name="datemin" type="range" id="datemin" value="1940" min="1940" max="2019"/>
-                </p>
-            </div>
+                <div class="col s3">
+                    <p class="fw100"><i class="fas fa-calendar-plus icon_spacing2"></i><?php echo $rangedatemax ?></p>
+                    <p class="range-field">
+                        <input name="datemax" type="range" id="datemax" value="2019" min="1940" max="2019"/>
+                    </p>
+                </div>
 
-            <div class="col s3">
-                <p class="fw100"><i class="fas fa-calendar-plus icon_spacing2"></i><?php echo $rangedatemax ?></p>
-                <p class="range-field">
-                    <input name="datemax" type="range" id="datemax" value="2019" min="1940" max="2019"/>
-                </p>
-            </div>
+                <div class="col s3">
+                    <p class="fw100"><i class="fas fa-sort-amount-down icon_spacing2"></i><?php echo $scoremin ?></p>
+                    <p class="range-field">
+                        <input name="notemin" type="range" id="test5" value="0" min="0" max="10"/>
+                    </p>
+                </div>
 
-            <div class="col s3">
-                <p class="fw100"><i class="fas fa-sort-amount-down icon_spacing2"></i><?php echo $scoremin ?></p>
-                <p class="range-field">
-                    <input name="notemin" type="range" id="test5" value="0" min="0" max="10"/>
-                </p>
-            </div>
+                <div class="col s3">
+                    <p class="fw100"><i class="fas fa-sort-amount-up icon_spacing2"></i><?php echo $scoremax ?></p>
+                    <p class="range-field">
+                        <input name="notemax" type="range" id="test5" value="10" min="0" max="10"/>
+                    </p>
+                </div>
 
-            <div class="col s3">
-                <p class="fw100"><i class="fas fa-sort-amount-up icon_spacing2"></i><?php echo $scoremax ?></p>
-                <p class="range-field">
-                    <input name="notemax" type="range" id="test5" value="10" min="0" max="10"/>
-                </p>
-            </div>
-
-            <?php
-            echo "
+                <?php
+                echo "
             <div class=\"input-field col s12\">
             <p class=\"fw100\"><i class=\"fas fa-tape icon_spacing2\"></i>Genre(s)</p>
                 <select name='genre'>
@@ -136,22 +112,92 @@ if (isset($_GET['film']) && empty($_GET['film']) && isset($_GET['datemin']) && i
                 </div>
             </div>
             ";
-            ?>
+                ?>
 
-        </form>
+            </form>
+        </div>
+
+
     </div>
 
-    <div class="homesuggest center">
-        <h6><?php echo $titleresult?></h6>
-    </div>
+<div class="flexgallery" id="post-data">
 
+    <?php
+    if (isset($_GET['film']) && !empty($_GET['film']) && isset($_GET['datemin']) && isset($_GET['datemax']) && isset($_GET['notemin'])
+        && isset($_GET['notemax']) && isset($_GET['sort'])) {
+        $film = $_GET['film'];
+        $datemin = $_GET['datemin'];
+        $datemax = $_GET['datemax'];
+        $notemin = $_GET['notemin'];
+        $notemax = $_GET['notemax'];
+        $sort = $_GET['sort'];
+
+        if (!isset($_GET['last_id']))
+            $idf = 0;
+        else
+            $idf = $_GET['last_id'];
+        $data = recup_search($film, $datemin, $datemax, $notemin, $notemax, $sort);
+        $_SESSION['search'] = $data;
+        $count = count($_SESSION['search']);
+        echo "<h5 class=\"homesuggest center\">$count $titleresult</h5>";
+        include('DataSearch.php');
+    }
+
+    if (isset($_GET['film']) && empty($_GET['film']) && isset($_GET['datemin']) && isset($_GET['datemax']) && isset($_GET['notemin'])
+        && isset($_GET['notemax']) && isset($_GET['sort']) && isset($_GET['genre'])) {
+        $datemin = $_GET['datemin'];
+        $datemax = $_GET['datemax'];
+        $notemin = $_GET['notemin'];
+        $notemax = $_GET['notemax'];
+        $sort = $_GET['sort'];
+        $genre = $_GET['genre'];
+
+        if (!isset($_GET['last_id']))
+            $idf = 0;
+        else
+            $idf = $_GET['last_id'];
+        $data = recup_genre($genre, $datemin, $datemax, $notemin, $notemax, $sort);
+        $_SESSION['search'] = $data;
+        $count = count($_SESSION['search']);
+        echo "<h5 class=\"homesuggest center\"> $count $titleresult</h5>";
+        include('DataSearch.php');
+    }
+
+    ?>
 </div>
 
-<script>
-    $(document).ready(function(){
-        $('select').formSelect();
+<script type="text/javascript">
+    $(document).ready(function() {
+        var win = $(window);
+
+        // Each time the user scrolls
+        win.scroll(function() {
+            // End of the document reached?
+            if ($(document).height() - win.height() === win.scrollTop()) {
+                var last_id = $(".post-id:last").attr("id");
+
+                $.ajax({
+                    url: '/view/SearchMoreData.php?last_id=' + last_id,
+                    dataType: 'html',
+                    type: "GET",
+                    success: function(html) {
+                        $('#post-data').append(html);
+                    }
+                });
+            }
+        });
     });
 
+    $(document).ready(function(){
+        $('.tooltipped').tooltip();
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("select").formSelect();
+    });
 </script>
 
 <script src="assets/js/materialize.js"></script>

@@ -6,7 +6,7 @@
  * Time: 15:34
  */
 
-require_once '../vendor/autoload.php';
+/*require_once '../vendor/autoload.php';*/
 include_once '../models/FilmModel.php';
 require_once '../models/UsersModel.php';
 

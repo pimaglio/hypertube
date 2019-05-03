@@ -29,12 +29,9 @@ include('header_connect.php');
             $idf = $_GET['last_id'];
         $data = recup_film_arr($idf);
 
-        include('data.php');
+        include('DataSuggestion.php');
 
         ?>
-    </div>
-    <div class="ajax-load text-center" style="display:none">
-        <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
     </div>
 </div>
 
@@ -46,16 +43,14 @@ include('header_connect.php');
         }
     });
 
-
     function loadMoreData(last_id){
         $.ajax(
             {
-                url: '/view/loadMoreData.php?last_id=' + last_id,
+                url: '/view/SuggestionMoreData.php?last_id=' + last_id,
                 type: "GET",
             })
             .done(function(data)
             {
-                
                 $("#post-data").append(data);
             })
 

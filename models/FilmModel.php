@@ -132,7 +132,7 @@ VALUES (:title, :title_fr, :creation, :casting,
                 ":datemin" => $datemin,
                 ":datemax" => $datemax,
                 ":notemin" => $notemin,
-                ":notemax" => $notemax,
+                ":notemax" => $notemax
             ));
         } else {
             $query = 'SELECT * FROM film WHERE INSTR(UPPER(genres), UPPER(:genre)) AND creation_date BETWEEN :datemin AND :datemax AND 
